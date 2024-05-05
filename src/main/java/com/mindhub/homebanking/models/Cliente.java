@@ -1,28 +1,40 @@
 package com.mindhub.homebanking.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
 @Entity
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
+
     private String firstName;
     private String lastName;
     private String email;
 
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Cuenta> cuentas = new HashSet<>();
     public Cliente(String first, String last, String email) {
         this.firstName = first;
         this.lastName = last;
         this.email = email;
     }
 
+
     public Cliente() {
 
+    }
+
+    public Set<Cuenta> getCuentas() {
+        return cuentas;
+    }
+
+    public void addCuenta(Cuenta cuenta) {
+        cuenta.setCliente(this);
+        cuentas.add(cuenta);
     }
 
     public String getEmail() {
