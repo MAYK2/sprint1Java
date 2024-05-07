@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Cuenta {
@@ -18,6 +21,9 @@ public class Cuenta {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+    @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL)
+    private List<Transaccion> transacciones = new ArrayList<>();
 
     public Cuenta() {
     }
@@ -63,5 +69,17 @@ public class Cuenta {
     public Cliente getCliente() {
         return cliente;
     }
+    public void agregarTransaccion(Transaccion transaccion) {
+        transacciones.add(transaccion);
+        transaccion.setCuenta(this);
+    }
 
+    public void setTransacciones(List<Transaccion> transacciones) {
+        this.transacciones = transacciones;
+    }
+
+    public List<Transaccion> getTransacciones() {
+        return transacciones;
+    }
 }
+

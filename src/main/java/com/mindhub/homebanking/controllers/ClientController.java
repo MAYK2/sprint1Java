@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/clients")
+@RequestMapping("/api/clientes")
 public class ClientController {
 
     @Autowired

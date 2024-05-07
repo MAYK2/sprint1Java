@@ -32,10 +32,6 @@ public class Cliente {
         return cuentas;
     }
 
-    public void addCuenta(Cuenta cuenta) {
-        cuenta.setCliente(this);
-        cuentas.add(cuenta);
-    }
 
     public String getEmail() {
         return email;
@@ -67,5 +63,9 @@ public class Cliente {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+    public void addCuenta(Cuenta cuenta) {
+        cuenta.setCliente(this);
+        cuentas.add(cuenta);
     }
 }
