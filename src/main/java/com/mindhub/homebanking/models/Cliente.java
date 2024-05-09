@@ -4,7 +4,10 @@ package com.mindhub.homebanking.models;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 @Entity
 public class Cliente {
     @Id
@@ -17,12 +20,15 @@ public class Cliente {
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Cuenta> cuentas = new HashSet<>();
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ClientLoan> clientLoans = new HashSet<>();
+
     public Cliente(String first, String last, String email) {
         this.firstName = first;
         this.lastName = last;
         this.email = email;
     }
-
 
     public Cliente() {
 
@@ -64,8 +70,26 @@ public class Cliente {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
     public void addCuenta(Cuenta cuenta) {
         cuenta.setCliente(this);
         cuentas.add(cuenta);
+    }
+
+    public void setClientLoans(Set<ClientLoan> clientLoans) {
+        this.clientLoans = clientLoans;
+    }
+
+    public void addClientLoan(ClientLoan clientLoan) {
+        clientLoan.setCliente(this);
+        clientLoans.add(clientLoan);
+    }
+
+    public List<Loan> getLoans() {
+        return clientLoans.stream().map(client -> client.getLoan()).collect(Collectors.toList());
+    }
+
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
     }
 }

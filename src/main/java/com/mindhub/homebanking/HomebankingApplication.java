@@ -1,12 +1,7 @@
 package com.mindhub.homebanking;
 
-import com.mindhub.homebanking.models.Cliente;
-import com.mindhub.homebanking.models.Cuenta;
-import com.mindhub.homebanking.models.TipoTransaccion;
-import com.mindhub.homebanking.models.Transaccion;
-import com.mindhub.homebanking.repositorios.ClienteRepository;
-import com.mindhub.homebanking.repositorios.CuentaRepository;
-import com.mindhub.homebanking.repositorios.TransaccionRepository;
+import com.mindhub.homebanking.models.*;
+import com.mindhub.homebanking.repositorios.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
@@ -23,7 +19,7 @@ public class HomebankingApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(ClienteRepository clienteRepository, CuentaRepository cuentaRepositorio, TransaccionRepository transaccionRepository) {
+    public CommandLineRunner initData(ClienteRepository clienteRepository, CuentaRepository cuentaRepositorio, TransaccionRepository transaccionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository) {
         return args -> {
             Cliente cliente = new Cliente("Melba", "Morel", "melba@mindhub.com");
             Cliente cliente2 = new Cliente("Erick", "Guevara", "guevara@guevara.com");
@@ -49,6 +45,17 @@ public class HomebankingApplication {
             Transaccion transaccion10 = new Transaccion(15000.0, "MercadoLibre", dateTime, TipoTransaccion.CREDITO);
             Transaccion transaccion11 = new Transaccion(15000.0, "Neumaticos", dateTime, TipoTransaccion.CREDITO);
             Transaccion transaccion12 = new Transaccion(-15000.0, "Café", dateTime, TipoTransaccion.DEBITO);
+
+            Loan hipotecario = new Loan("Hipotecario", 500000, List.of(12, 24, 36, 48, 60));
+            Loan personal = new Loan("Personal", 100000, List.of(6, 12, 24));
+            Loan automotor = new Loan("Automotor", 200000, List.of(6, 12, 24, 36));
+
+            //Creo los clientloans
+            ClientLoan melbaClientLoan = new ClientLoan(400.000, 60);
+            ClientLoan melbaClientLoan2 = new ClientLoan(50.000, 12);
+
+            ClientLoan erickClientLoan = new ClientLoan(100.000, 24);
+            ClientLoan erickClientLoan2 = new ClientLoan(200.000, 36);
 
             // Guardar los clientes en el repositorio primero
             clienteRepository.save(cliente);
@@ -97,6 +104,26 @@ public class HomebankingApplication {
             // Guardar los clientes actualizados en el repositorio
             clienteRepository.save(cliente);
             clienteRepository.save(cliente2);
+
+            //Guardar los prestamos en el repository
+            loanRepository.save(hipotecario);
+            loanRepository.save(personal);
+            loanRepository.save(automotor);
+
+            cliente.addClientLoan(melbaClientLoan);
+            cliente.addClientLoan(melbaClientLoan2);
+            cliente2.addClientLoan(erickClientLoan);
+            cliente2.addClientLoan(erickClientLoan2);
+            hipotecario.addClientLoan(melbaClientLoan);
+            personal.addClientLoan(melbaClientLoan2);
+            personal.addClientLoan(erickClientLoan);
+            automotor.addClientLoan(erickClientLoan2);
+
+            // Guardar ClientLoan en el repositorio
+            clientLoanRepository.save(melbaClientLoan);
+            clientLoanRepository.save(melbaClientLoan2);
+            clientLoanRepository.save(erickClientLoan);
+            clientLoanRepository.save(erickClientLoan2);
         };
     }
 
