@@ -50,10 +50,6 @@ public class Loan {
         this.maxAmount = maxAmount;
     }
 
-    public List<Cliente> getClients() {
-        return clientLoans.stream().map(client -> client.getCliente()).collect(Collectors.toList());
-    }
-
     public List<Integer> getPayments() {
         return payments;
     }
@@ -68,6 +64,10 @@ public class Loan {
 
     public Set<ClientLoan> getClientLoans() {
         return clientLoans;
+    }
+
+    public List<Client> getClients() {
+        return clientLoans.stream().map(client -> client.getCliente()).collect(Collectors.toList());
     }
 
     public void addClientLoan(ClientLoan clientLoan) {

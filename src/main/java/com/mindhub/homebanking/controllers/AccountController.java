@@ -1,8 +1,8 @@
 package com.mindhub.homebanking.controllers;
 
-import com.mindhub.homebanking.dtos.CuentaDTO;
-import com.mindhub.homebanking.models.Cuenta;
-import com.mindhub.homebanking.repositorios.CuentaRepository;
+import com.mindhub.homebanking.dtos.AccountDTO;
+import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.repositorios.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,18 +14,18 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
-public class CuentaController {
+public class AccountController {
 
     @Autowired
-    private CuentaRepository cuentaRepository;
+    private AccountRepository accountRepository;
 
     // Endpoint para obtener todas las cuentas
     @GetMapping("/cuentas")
     public ResponseEntity<?> getAllAccounts() {
-        List<Cuenta> cuentas = cuentaRepository.findAll();
-        List<CuentaDTO> cuentaDTOList = cuentas.stream().map(CuentaDTO::new).collect(Collectors.toList());
-        if (!cuentas.isEmpty()) {
-            return new ResponseEntity<>(cuentaDTOList, HttpStatus.OK);
+        List<Account> accounts = accountRepository.findAll();
+        List<AccountDTO> accountDTOList = accounts.stream().map(AccountDTO::new).collect(Collectors.toList());
+        if (!accounts.isEmpty()) {
+            return new ResponseEntity<>(accountDTOList, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("No se han encontrado cuentas", HttpStatus.NOT_FOUND);
         }
@@ -34,11 +34,11 @@ public class CuentaController {
     // Endpoint para buscar una cuenta por su ID
     @GetMapping("/cuentas/{id}")
     public ResponseEntity<?> getAccountById(@PathVariable Long id) {
-        Optional<Cuenta> cuentaOptional = cuentaRepository.findById(id);
+        Optional<Account> cuentaOptional = accountRepository.findById(id);
         if (cuentaOptional.isPresent()) {
-            Cuenta cuenta = cuentaOptional.get();
-            CuentaDTO cuentaDTO = new CuentaDTO(cuenta);
-            return new ResponseEntity<>(cuentaDTO, HttpStatus.OK);
+            Account account = cuentaOptional.get();
+            AccountDTO accountDTO = new AccountDTO(account);
+            return new ResponseEntity<>(accountDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Cuenta no encontrada", HttpStatus.NOT_FOUND);
         }

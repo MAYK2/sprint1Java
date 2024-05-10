@@ -1,6 +1,6 @@
 package com.mindhub.homebanking.models;
 
-public enum TipoTransaccion {
+public enum TypeTransaction {
     CREDITO,
     DEBITO
 }

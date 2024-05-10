@@ -19,32 +19,34 @@ public class HomebankingApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(ClienteRepository clienteRepository, CuentaRepository cuentaRepositorio, TransaccionRepository transaccionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository) {
+    public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository cuentaRepositorio, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
         return args -> {
-            Cliente cliente = new Cliente("Melba", "Morel", "melba@mindhub.com");
-            Cliente cliente2 = new Cliente("Erick", "Guevara", "guevara@guevara.com");
+            Client client = new Client("Melba", "Morel", "melba@mindhub.com");
+            Client client2 = new Client("Erick", "Guevara", "guevara@guevara.com");
             LocalDate today = LocalDate.now();
             LocalDate tomorrow = today.plusDays(1);
             LocalDateTime dateTime = LocalDateTime.of(2024, 5, 6, 15, 30, 0);
+            LocalDate fiveYears = LocalDate.now().plusYears(5);
+
             // Crear las cuentas
-            Cuenta cuenta1 = new Cuenta("VIN001", today, 5000.0);
-            Cuenta cuenta2 = new Cuenta("VIN002", tomorrow, 7500.0);
-            Cuenta cuenta3 = new Cuenta("VIN003", tomorrow, 4500.0);
-            Cuenta cuenta4 = new Cuenta("VIN004", today, 4500.0);
+            Account account1 = new Account("VIN001", today, 5000.0);
+            Account account2 = new Account("VIN002", tomorrow, 7500.0);
+            Account account3 = new Account("VIN003", tomorrow, 4500.0);
+            Account account4 = new Account("VIN004", today, 4500.0);
 
             //Crear las transacciones
-            Transaccion transaccion1 = new Transaccion(-5000.0, "Supermercado", dateTime, TipoTransaccion.DEBITO);
-            Transaccion transaccion2 = new Transaccion(-2500.0, "Kiosco", dateTime, TipoTransaccion.DEBITO);
-            Transaccion transaccion3 = new Transaccion(-1000.0, "Alimento", dateTime, TipoTransaccion.DEBITO);
-            Transaccion transaccion4 = new Transaccion(10000.0, "Steam", dateTime, TipoTransaccion.CREDITO);
-            Transaccion transaccion5 = new Transaccion(25000.0, "Zapatillas", dateTime, TipoTransaccion.CREDITO);
-            Transaccion transaccion6 = new Transaccion(35000.0, "Zapatos", dateTime, TipoTransaccion.CREDITO);
-            Transaccion transaccion7 = new Transaccion(-15000.0, "Gimnasio", dateTime, TipoTransaccion.DEBITO);
-            Transaccion transaccion8 = new Transaccion(-15000.0, "Alcohol", dateTime, TipoTransaccion.DEBITO);
-            Transaccion transaccion9 = new Transaccion(-15000.0, "MercadoPago", dateTime, TipoTransaccion.DEBITO);
-            Transaccion transaccion10 = new Transaccion(15000.0, "MercadoLibre", dateTime, TipoTransaccion.CREDITO);
-            Transaccion transaccion11 = new Transaccion(15000.0, "Neumaticos", dateTime, TipoTransaccion.CREDITO);
-            Transaccion transaccion12 = new Transaccion(-15000.0, "Café", dateTime, TipoTransaccion.DEBITO);
+            Transaction transaction1 = new Transaction(-5000.0, "Supermercado", dateTime, TypeTransaction.DEBITO);
+            Transaction transaction2 = new Transaction(-2500.0, "Kiosco", dateTime, TypeTransaction.DEBITO);
+            Transaction transaction3 = new Transaction(-1000.0, "Alimento", dateTime, TypeTransaction.DEBITO);
+            Transaction transaction4 = new Transaction(10000.0, "Steam", dateTime, TypeTransaction.CREDITO);
+            Transaction transaction5 = new Transaction(25000.0, "Zapatillas", dateTime, TypeTransaction.CREDITO);
+            Transaction transaction6 = new Transaction(35000.0, "Zapatos", dateTime, TypeTransaction.CREDITO);
+            Transaction transaction7 = new Transaction(-15000.0, "Gimnasio", dateTime, TypeTransaction.DEBITO);
+            Transaction transaction8 = new Transaction(-15000.0, "Alcohol", dateTime, TypeTransaction.DEBITO);
+            Transaction transaction9 = new Transaction(-15000.0, "MercadoPago", dateTime, TypeTransaction.DEBITO);
+            Transaction transaction10 = new Transaction(15000.0, "MercadoLibre", dateTime, TypeTransaction.CREDITO);
+            Transaction transaction11 = new Transaction(15000.0, "Neumaticos", dateTime, TypeTransaction.CREDITO);
+            Transaction transaction12 = new Transaction(-15000.0, "Café", dateTime, TypeTransaction.DEBITO);
 
             Loan hipotecario = new Loan("Hipotecario", 500000, List.of(12, 24, 36, 48, 60));
             Loan personal = new Loan("Personal", 100000, List.of(6, 12, 24));
@@ -57,74 +59,92 @@ public class HomebankingApplication {
             ClientLoan erickClientLoan = new ClientLoan(100.000, 24);
             ClientLoan erickClientLoan2 = new ClientLoan(200.000, 36);
 
+            //Crear las tarjetas
+            Card cardMelbaDebit = new Card("4498-9824-1662-0586", 333, today,fiveYears, CreditCardType.DEBIT, ColorCard.GOLD,"Melba Morel");
+            Card cardMelbaCredit = new Card("4498-9423-1152-5083", 550, today,fiveYears, CreditCardType.CREDIT, ColorCard.TITANIUM,"Melba Morel");
+            Card cardErickDebit = new Card("4498-3770-3454-1222", 248, today, fiveYears, CreditCardType.DEBIT, ColorCard.SILVER,"Erick Guevara");
+
             // Guardar los clientes en el repositorio primero
-            clienteRepository.save(cliente);
-            clienteRepository.save(cliente2);
+            clientRepository.save(client);
+            clientRepository.save(client2);
 
             // Guardar las cuentas en el repositorio
-            cuentaRepositorio.save(cuenta1);
-            cuentaRepositorio.save(cuenta2);
-            cuentaRepositorio.save(cuenta3);
-            cuentaRepositorio.save(cuenta4);
+            cuentaRepositorio.save(account1);
+            cuentaRepositorio.save(account2);
+            cuentaRepositorio.save(account3);
+            cuentaRepositorio.save(account4);
 
             // Asociar las cuentas con los clientes
-            cliente.addCuenta(cuenta1);
-            cliente.addCuenta(cuenta2);
-            cliente2.addCuenta(cuenta3);
-            cliente2.addCuenta(cuenta4);
+            client.addCuenta(account1);
+            client.addCuenta(account2);
+            client2.addCuenta(account3);
+            client2.addCuenta(account4);
 
             // Guardar las transacciones en el repositorio
-            transaccionRepository.save(transaccion1);
-            transaccionRepository.save(transaccion2);
-            transaccionRepository.save(transaccion3);
-            transaccionRepository.save(transaccion4);
-            transaccionRepository.save(transaccion5);
-            transaccionRepository.save(transaccion6);
-            transaccionRepository.save(transaccion7);
-            transaccionRepository.save(transaccion8);
-            transaccionRepository.save(transaccion9);
-            transaccionRepository.save(transaccion10);
-            transaccionRepository.save(transaccion11);
-            transaccionRepository.save(transaccion12);
+            transactionRepository.save(transaction1);
+            transactionRepository.save(transaction2);
+            transactionRepository.save(transaction3);
+            transactionRepository.save(transaction4);
+            transactionRepository.save(transaction5);
+            transactionRepository.save(transaction6);
+            transactionRepository.save(transaction7);
+            transactionRepository.save(transaction8);
+            transactionRepository.save(transaction9);
+            transactionRepository.save(transaction10);
+            transactionRepository.save(transaction11);
+            transactionRepository.save(transaction12);
 
-            cuenta1.agregarTransaccion(transaccion1);
-            cuenta1.agregarTransaccion(transaccion2);
-            cuenta1.agregarTransaccion(transaccion3);
-            cuenta2.agregarTransaccion(transaccion4);
-            cuenta2.agregarTransaccion(transaccion5);
-            cuenta2.agregarTransaccion(transaccion6);
-            cuenta3.agregarTransaccion(transaccion7);
-            cuenta3.agregarTransaccion(transaccion8);
-            cuenta3.agregarTransaccion(transaccion9);
-            cuenta4.agregarTransaccion(transaccion10);
-            cuenta4.agregarTransaccion(transaccion11);
-            cuenta4.agregarTransaccion(transaccion12);
+            account1.agregarTransaccion(transaction1);
+            account1.agregarTransaccion(transaction2);
+            account1.agregarTransaccion(transaction3);
+            account2.agregarTransaccion(transaction4);
+            account2.agregarTransaccion(transaction5);
+            account2.agregarTransaccion(transaction6);
+            account3.agregarTransaccion(transaction7);
+            account3.agregarTransaccion(transaction8);
+            account3.agregarTransaccion(transaction9);
+            account4.agregarTransaccion(transaction10);
+            account4.agregarTransaccion(transaction11);
+            account4.agregarTransaccion(transaction12);
 
 
             // Guardar los clientes actualizados en el repositorio
-            clienteRepository.save(cliente);
-            clienteRepository.save(cliente2);
+            clientRepository.save(client);
+            clientRepository.save(client2);
 
             //Guardar los prestamos en el repository
             loanRepository.save(hipotecario);
             loanRepository.save(personal);
             loanRepository.save(automotor);
 
-            cliente.addClientLoan(melbaClientLoan);
-            cliente.addClientLoan(melbaClientLoan2);
-            cliente2.addClientLoan(erickClientLoan);
-            cliente2.addClientLoan(erickClientLoan2);
-            hipotecario.addClientLoan(melbaClientLoan);
+            client.addClientLoan(melbaClientLoan2);
+            client.addClientLoan(melbaClientLoan);
+            client2.addClientLoan(erickClientLoan2);
+            client2.addClientLoan(erickClientLoan);
             personal.addClientLoan(melbaClientLoan2);
-            personal.addClientLoan(erickClientLoan);
+            hipotecario.addClientLoan(melbaClientLoan);
             automotor.addClientLoan(erickClientLoan2);
+            personal.addClientLoan(erickClientLoan);
 
             // Guardar ClientLoan en el repositorio
             clientLoanRepository.save(melbaClientLoan);
             clientLoanRepository.save(melbaClientLoan2);
             clientLoanRepository.save(erickClientLoan);
             clientLoanRepository.save(erickClientLoan2);
+
+            // Asociar los clientes con sus tarjetas
+            client.addCard(cardMelbaDebit);
+            client.addCard(cardMelbaCredit);
+            client2.addCard(cardErickDebit);
+
+            //Guardar las cards en el repositorio
+            cardRepository.save(cardMelbaDebit);
+            cardRepository.save(cardMelbaCredit);
+            cardRepository.save(cardErickDebit);
+
+            // Guardar los clientes actualizados en el repositorio
+            clientRepository.save(client);
+            clientRepository.save(client2);
         };
     }
-
 }

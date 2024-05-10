@@ -1,15 +1,13 @@
 package com.mindhub.homebanking.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
-public class Cuenta {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -19,16 +17,16 @@ public class Cuenta {
     private Double saldo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    @JoinColumn(name = "client_id")
+    private Client client;
 
-    @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL)
-    private List<Transaccion> transacciones = new ArrayList<>();
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<Transaction> transacciones = new ArrayList<>();
 
-    public Cuenta() {
+    public Account() {
     }
 
-    public Cuenta(String numero, LocalDate fechaCreacion, Double saldo) {
+    public Account(String numero, LocalDate fechaCreacion, Double saldo) {
         this.numero = numero;
         this.fechaCreacion = fechaCreacion;
         this.saldo = saldo;
@@ -62,23 +60,24 @@ public class Cuenta {
         this.saldo = saldo;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCliente(Client client) {
+        this.client = client;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-    public void agregarTransaccion(Transaccion transaccion) {
-        transacciones.add(transaccion);
-        transaccion.setCuenta(this);
+    public Client getCliente() {
+        return client;
     }
 
-    public void setTransacciones(List<Transaccion> transacciones) {
+    public void agregarTransaccion(Transaction transaction) {
+        transacciones.add(transaction);
+        transaction.setCuenta(this);
+    }
+
+    public void setTransacciones(List<Transaction> transacciones) {
         this.transacciones = transacciones;
     }
 
-    public List<Transaccion> getTransacciones() {
+    public List<Transaction> getTransacciones() {
         return transacciones;
     }
 }

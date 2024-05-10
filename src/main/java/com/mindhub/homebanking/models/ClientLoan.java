@@ -13,7 +13,7 @@ public class ClientLoan {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
-    private Cliente cliente; // Cliente asociado al préstamo
+    private Client client; // Cliente asociado al préstamo
 
     @ManyToOne
     @JoinColumn(name = "loan_id")
@@ -52,12 +52,12 @@ public class ClientLoan {
         this.payments = payments;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Client getCliente() {
+        return client;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCliente(Client client) {
+        this.client = client;
     }
 
     public Loan getLoan() {

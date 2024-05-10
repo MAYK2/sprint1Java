@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-public class Cliente {
+public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -18,26 +18,28 @@ public class Cliente {
     private String lastName;
     private String email;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Cuenta> cuentas = new HashSet<>();
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Account> accounts = new HashSet<>();
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ClientLoan> clientLoans = new HashSet<>();
 
-    public Cliente(String first, String last, String email) {
+    @OneToMany (mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Card> cards = new HashSet<>();
+
+    public Client(String first, String last, String email) {
         this.firstName = first;
         this.lastName = last;
         this.email = email;
     }
 
-    public Cliente() {
+    public Client() {
 
     }
 
-    public Set<Cuenta> getCuentas() {
-        return cuentas;
+    public Set<Account> getCuentas() {
+        return accounts;
     }
-
 
     public String getEmail() {
         return email;
@@ -71,25 +73,46 @@ public class Cliente {
         this.lastName = lastName;
     }
 
-    public void addCuenta(Cuenta cuenta) {
-        cuenta.setCliente(this);
-        cuentas.add(cuenta);
-    }
 
     public void setClientLoans(Set<ClientLoan> clientLoans) {
         this.clientLoans = clientLoans;
+    }
+
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
+    }
+
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public Set<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(Set<Card> cards) {
+        this.cards = cards;
+    }
+
+    public void addCuenta(Account account) {
+        account.setCliente(this);
+        accounts.add(account);
     }
 
     public void addClientLoan(ClientLoan clientLoan) {
         clientLoan.setCliente(this);
         clientLoans.add(clientLoan);
     }
-
     public List<Loan> getLoans() {
         return clientLoans.stream().map(client -> client.getLoan()).collect(Collectors.toList());
     }
 
-    public Set<ClientLoan> getClientLoans() {
-        return clientLoans;
+    public void addCard(Card card) {
+        card.setClient(this);
+        cards.add(card);
     }
 }

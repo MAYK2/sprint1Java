@@ -1,8 +1,8 @@
 package com.mindhub.homebanking.controllers;
 
-import com.mindhub.homebanking.dtos.ClienteDTO;
-import com.mindhub.homebanking.models.Cliente;
-import com.mindhub.homebanking.repositorios.ClienteRepository;
+import com.mindhub.homebanking.dtos.ClientDTO;
+import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.repositorios.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +17,15 @@ import java.util.stream.Collectors;
 public class ClientController {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClientRepository clientRepository;
 
     // Endpoint para obtener todos los clientes
     @GetMapping("/")
     public ResponseEntity<?> getAllClients() {
-        List<Cliente> clientes = clienteRepository.findAll();
-        List<ClienteDTO> ClienteDtolist = clientes.stream().map(ClienteDTO::new).collect(Collectors.toList());
-        if (!clientes.isEmpty()) {
-            return new ResponseEntity<>(ClienteDtolist, HttpStatus.OK);
+        List<Client> clients = clientRepository.findAll();
+        List<ClientDTO> clientDtolist = clients.stream().map(ClientDTO::new).collect(Collectors.toList());
+        if (!clients.isEmpty()) {
+            return new ResponseEntity<>(clientDtolist, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("No se han encontrado clientes", HttpStatus.NOT_FOUND);
         }
@@ -34,11 +34,11 @@ public class ClientController {
     // Endpoint para buscar un cliente por su ID
     @GetMapping("/{id}")
     public ResponseEntity<?> getClientById(@PathVariable Long id) {
-        Optional<Cliente> clienteOptional = clienteRepository.findById(id);
+        Optional<Client> clienteOptional = clientRepository.findById(id);
         if (clienteOptional.isPresent()) {
-            Cliente cliente = clienteOptional.get();
-            ClienteDTO clienteDTO = new ClienteDTO(cliente);
-            return new ResponseEntity<>(clienteDTO, HttpStatus.OK);
+            Client client = clienteOptional.get();
+            ClientDTO clientDTO = new ClientDTO(client);
+            return new ResponseEntity<>(clientDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Cliente no encontrado", HttpStatus.NOT_FOUND);
         }

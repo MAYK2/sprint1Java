@@ -2,35 +2,34 @@ package com.mindhub.homebanking.models;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-public class Transaccion {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private Double amount;
     private String description;
     private LocalDateTime fecha;
-    private TipoTransaccion tipo;
+    private TypeTransaction tipo;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cuenta_id")
-    private Cuenta cuenta;
+    @JoinColumn(name = "account_id")
+    private Account account;
 
 
-    public Transaccion(Double amount, String description, LocalDateTime fecha, TipoTransaccion tipo) {
+    public Transaction(Double amount, String description, LocalDateTime fecha, TypeTransaction tipo) {
         this.amount = amount;
         this.description = description;
         this.fecha = fecha;
         this.tipo = tipo;
     }
 
-    public Transaccion() {
+    public Transaction() {
 
     }
-    public void setCuenta(Cuenta cuenta) {
-        this.cuenta = cuenta;
+    public void setCuenta(Account account) {
+        this.account = account;
     }
 
     public long getId() {
@@ -61,11 +60,11 @@ public class Transaccion {
         this.fecha = fecha;
     }
 
-    public TipoTransaccion getTipo() {
+    public TypeTransaction getTipo() {
         return tipo;
     }
 
-    public void setTipo(TipoTransaccion tipo) {
+    public void setTipo(TypeTransaction tipo) {
         this.tipo = tipo;
     }
 }
