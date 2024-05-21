@@ -2,10 +2,12 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositorios.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,10 +21,13 @@ public class HomebankingApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository cuentaRepositorio, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
+    public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository cuentaRepositorio,
+                                      TransactionRepository transactionRepository, LoanRepository loanRepository,
+                                      ClientLoanRepository clientLoanRepository, CardRepository cardRepository,
+                                      PasswordEncoder passwordEncoder) {  // Inyección del PasswordEncoder
         return args -> {
-            Client client = new Client("Melba", "Morel", "melba@mindhub.com");
-            Client client2 = new Client("Erick", "Guevara", "guevara@guevara.com");
+            Client client = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("123"));  // Usar el PasswordEncoder
+            Client client2 = new Client("Erick", "Guevara", "guevara@guevara.com", passwordEncoder.encode("456"));  // Usar el PasswordEncoder
             LocalDate today = LocalDate.now();
             LocalDate tomorrow = today.plusDays(1);
             LocalDateTime dateTime = LocalDateTime.of(2024, 5, 6, 15, 30, 0);
@@ -34,7 +39,7 @@ public class HomebankingApplication {
             Account account3 = new Account("VIN003", tomorrow, 4500.0);
             Account account4 = new Account("VIN004", today, 4500.0);
 
-            //Crear las transacciones
+            // Crear las transacciones
             Transaction transaction1 = new Transaction(-5000.0, "Supermercado", dateTime, TypeTransaction.DEBITO);
             Transaction transaction2 = new Transaction(-2500.0, "Kiosco", dateTime, TypeTransaction.DEBITO);
             Transaction transaction3 = new Transaction(-1000.0, "Alimento", dateTime, TypeTransaction.DEBITO);
@@ -52,17 +57,17 @@ public class HomebankingApplication {
             Loan personal = new Loan("Personal", 100000, List.of(6, 12, 24));
             Loan automotor = new Loan("Automotor", 200000, List.of(6, 12, 24, 36));
 
-            //Creo los clientloans
-            ClientLoan melbaClientLoan = new ClientLoan(400.000, 60);
-            ClientLoan melbaClientLoan2 = new ClientLoan(50.000, 12);
+            // Crear los ClientLoans
+            ClientLoan melbaClientLoan = new ClientLoan(400000, 60);
+            ClientLoan melbaClientLoan2 = new ClientLoan(50000, 12);
 
-            ClientLoan erickClientLoan = new ClientLoan(100.000, 24);
-            ClientLoan erickClientLoan2 = new ClientLoan(200.000, 36);
+            ClientLoan erickClientLoan = new ClientLoan(100000, 24);
+            ClientLoan erickClientLoan2 = new ClientLoan(200000, 36);
 
-            //Crear las tarjetas
-            Card cardMelbaDebit = new Card("4498-9824-1662-0586", 333, today,fiveYears, CreditCardType.DEBIT, ColorCard.GOLD,"Melba Morel");
-            Card cardMelbaCredit = new Card("4498-9423-1152-5083", 550, today,fiveYears, CreditCardType.CREDIT, ColorCard.TITANIUM,"Melba Morel");
-            Card cardErickDebit = new Card("4498-3770-3454-1222", 248, today, fiveYears, CreditCardType.DEBIT, ColorCard.SILVER,"Erick Guevara");
+            // Crear las tarjetas
+            Card cardMelbaDebit = new Card("4498-9824-1662-0586", 333, today, fiveYears, CreditCardType.DEBIT, ColorCard.GOLD, "Melba Morel");
+            Card cardMelbaCredit = new Card("4498-9423-1152-5083", 550, today, fiveYears, CreditCardType.CREDIT, ColorCard.TITANIUM, "Melba Morel");
+            Card cardErickDebit = new Card("4498-3770-3454-1222", 248, today, fiveYears, CreditCardType.DEBIT, ColorCard.SILVER, "Erick Guevara");
 
             // Guardar los clientes en el repositorio primero
             clientRepository.save(client);
@@ -107,12 +112,11 @@ public class HomebankingApplication {
             account4.agregarTransaccion(transaction11);
             account4.agregarTransaccion(transaction12);
 
-
             // Guardar los clientes actualizados en el repositorio
             clientRepository.save(client);
             clientRepository.save(client2);
 
-            //Guardar los prestamos en el repository
+            // Guardar los préstamos en el repositorio
             loanRepository.save(hipotecario);
             loanRepository.save(personal);
             loanRepository.save(automotor);
@@ -126,7 +130,7 @@ public class HomebankingApplication {
             automotor.addClientLoan(erickClientLoan2);
             personal.addClientLoan(erickClientLoan);
 
-            // Guardar ClientLoan en el repositorio
+            // Guardar ClientLoans en el repositorio
             clientLoanRepository.save(melbaClientLoan);
             clientLoanRepository.save(melbaClientLoan2);
             clientLoanRepository.save(erickClientLoan);
@@ -137,7 +141,7 @@ public class HomebankingApplication {
             client.addCard(cardMelbaCredit);
             client2.addCard(cardErickDebit);
 
-            //Guardar las cards en el repositorio
+            // Guardar las tarjetas en el repositorio
             cardRepository.save(cardMelbaDebit);
             cardRepository.save(cardMelbaCredit);
             cardRepository.save(cardErickDebit);
