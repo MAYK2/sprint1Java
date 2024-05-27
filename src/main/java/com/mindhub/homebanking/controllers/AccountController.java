@@ -20,7 +20,7 @@ public class AccountController {
     private AccountRepository accountRepository;
 
     // Endpoint para obtener todas las cuentas
-    @GetMapping("/cuentas")
+    @GetMapping("/accounts")
     public ResponseEntity<?> getAllAccounts() {
         List<Account> accounts = accountRepository.findAll();
         List<AccountDTO> accountDTOList = accounts.stream().map(AccountDTO::new).collect(Collectors.toList());
@@ -32,7 +32,7 @@ public class AccountController {
     }
 
     // Endpoint para buscar una cuenta por su ID
-    @GetMapping("/cuentas/{id}")
+    @GetMapping("/accounts/{id}")
     public ResponseEntity<?> getAccountById(@PathVariable Long id) {
         Optional<Account> cuentaOptional = accountRepository.findById(id);
         if (cuentaOptional.isPresent()) {

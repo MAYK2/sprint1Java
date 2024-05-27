@@ -41,10 +41,10 @@ public class JwtUtilService {
         return extractExpiration(token).before(new Date());
     }
 
-    private String createToken(Map<String, Object> claims, String username) {
+    private String createToken(Map<String, Object> roles, String username) {
         return Jwts
                 .builder()
-                .claims(claims)
+                .claims(roles)
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TOKEN))
@@ -53,10 +53,10 @@ public class JwtUtilService {
     }
 
     public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();
+        Map<String, Object> roles = new HashMap<>();
         String rol = userDetails.getAuthorities().iterator().next().getAuthority();
-        claims.put("rol", rol);
-        return createToken(claims, userDetails.getUsername());
+        roles.put("rol", rol);
+        return createToken(roles, userDetails.getUsername());
     }
 }
 

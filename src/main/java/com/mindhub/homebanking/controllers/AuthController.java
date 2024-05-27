@@ -30,7 +30,7 @@ public class AuthController {
     private ClientRepository clientRepository;
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -42,22 +42,31 @@ public class AuthController {
     private JwtUtilService jwtUtilService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login (@RequestBody LoginDTO loginDTO){
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.email(), loginDTO.password()));
             final UserDetails userDetails = userDetailsService.loadUserByUsername(loginDTO.email());
             final String jwt = jwtUtilService.generateToken(userDetails);
             return ResponseEntity.ok(jwt);
-        }catch (Exception e){
-            return new ResponseEntity<>("Email or password invalid" , HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Email or password invalid", HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register (@RequestBody RegisterDTO registerDTO){
+    public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
 
-        if(registerDTO.firstName().isBlank()){
-            return new ResponseEntity<>("The name field must not be empty" , HttpStatus.BAD_REQUEST);
+        if (registerDTO.firstName().isBlank()) {
+            return new ResponseEntity<>("The name field must not be empty", HttpStatus.BAD_REQUEST);
+        }
+        if (registerDTO.lastName().isBlank()) {
+            return new ResponseEntity<>("The last name field must not be empty", HttpStatus.BAD_REQUEST);
+        }
+        if (registerDTO.email().isBlank()) {
+            return new ResponseEntity<>("The email field must not be empty", HttpStatus.BAD_REQUEST);
+        }
+        if (registerDTO.password().isBlank()) {
+            return new ResponseEntity<>("The password field must not be empty", HttpStatus.BAD_REQUEST);
         }
 
         Client client = new Client(
@@ -67,8 +76,9 @@ public class AuthController {
         clientRepository.save(client);
         return new ResponseEntity<>("Client created", HttpStatus.CREATED);
     }
+
     @GetMapping("/current")
-    public ResponseEntity<?> getClient(Authentication authentication){
+    public ResponseEntity<?> getClient(Authentication authentication) {
         Client client = clientRepository.findByEmail(authentication.getName());
         return ResponseEntity.ok(new ClientDTO(client));
     }
