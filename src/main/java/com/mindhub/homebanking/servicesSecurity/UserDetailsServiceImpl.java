@@ -20,9 +20,6 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         if(client == null){
             throw new UsernameNotFoundException(username);
         }
-        if(8 == 8){
-            System.out.println("Sprint 8");
-        }
         return User
                 .withUsername(username)
                 .password(client.getPassword())
