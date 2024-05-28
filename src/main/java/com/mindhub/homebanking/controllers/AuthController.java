@@ -4,6 +4,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.dtos.LoginDTO;
 import com.mindhub.homebanking.dtos.RegisterDTO;
+import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositorios.AccountRepository;
 import com.mindhub.homebanking.repositorios.ClientRepository;
@@ -18,6 +19,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+
+import static com.mindhub.homebanking.controllers.AccountController.eightDigits;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -73,7 +78,18 @@ public class AuthController {
                 registerDTO.firstName(),
                 registerDTO.lastName(), registerDTO.email(),
                 passwordEncoder.encode(registerDTO.password()));
+
+        String number;
+        do {
+            number = "VIN-" + eightDigits();
+        } while (accountRepository.findByNumberAccount(number) != null);
+
+        Account account = new Account(number, LocalDate.now(), 0.0);
+        account.setClient(client);
+        client.addAccount(account);
         clientRepository.save(client);
+        accountRepository.save(account);
+
         return new ResponseEntity<>("Client created", HttpStatus.CREATED);
     }
 

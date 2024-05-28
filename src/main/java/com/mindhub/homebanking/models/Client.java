@@ -114,8 +114,8 @@ public class Client {
         this.password = password;
     }
 
-    public void addCuenta(Account account) {
-        account.setCliente(this);
+    public void addAccount(Account account) {
+        account.setClient(this);
         accounts.add(account);
     }
 

@@ -12,7 +12,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String numero;
+    private String numberAccount;
     private LocalDate fechaCreacion;
     private Double saldo;
 
@@ -27,7 +27,7 @@ public class Account {
     }
 
     public Account(String numero, LocalDate fechaCreacion, Double saldo) {
-        this.numero = numero;
+        this.numberAccount = numero;
         this.fechaCreacion = fechaCreacion;
         this.saldo = saldo;
     }
@@ -37,11 +37,11 @@ public class Account {
     }
 
     public String getNumero() {
-        return numero;
+        return numberAccount;
     }
 
     public void setNumero(String numero) {
-        this.numero = numero;
+        this.numberAccount = numero;
     }
 
     public LocalDate getFechaCreacion() {
@@ -60,7 +60,7 @@ public class Account {
         this.saldo = saldo;
     }
 
-    public void setCliente(Client client) {
+    public void setClient(Client client) {
         this.client = client;
     }
 

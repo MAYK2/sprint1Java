@@ -80,10 +80,10 @@ public class HomebankingApplication {
             cuentaRepositorio.save(account4);
 
             // Asociar las cuentas con los clientes
-            client.addCuenta(account1);
-            client.addCuenta(account2);
-            client2.addCuenta(account3);
-            client2.addCuenta(account4);
+            client.addAccount(account1);
+            client.addAccount(account2);
+            client2.addAccount(account3);
+            client2.addAccount(account4);
 
             // Guardar las transacciones en el repositorio
             transactionRepository.save(transaction1);
