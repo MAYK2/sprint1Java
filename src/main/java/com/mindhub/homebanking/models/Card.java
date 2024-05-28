@@ -14,7 +14,7 @@ public class Card {
     private LocalDate thrudate;
     private LocalDate fromdate;
     private int cvv;
-    private CreditCardType Type;
+    private CreditCardType type;
     private ColorCard color;
     private String cardholder;
 
@@ -30,7 +30,7 @@ public class Card {
         this.cvv = cvv;
         this.fromdate = fromdate;
         this.thrudate = thrudate;
-        Type = type;
+        this.type = type;
         this.color = color;
         this.cardholder = cardholder;
     }
@@ -72,11 +72,11 @@ public class Card {
     }
 
     public CreditCardType getType() {
-        return Type;
+        return type;
     }
 
     public void setType(CreditCardType type) {
-        Type = type;
+        type = type;
     }
 
     public String getCardholder() {
