@@ -35,7 +35,10 @@ public class WebConfig {
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/auth/login", "/api/auth/register", "/h2-console/**").permitAll()
-
+//                        .requestMatchers("/api/clients").hasRole("ADMIN")
+//                        .requestMatchers("/api/clients/**").hasRole("ADMIN")
+//                        .requestMatchers("/api/accounts").hasRole("ADMIN")
+//                        .requestMatchers("/api/accounts/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

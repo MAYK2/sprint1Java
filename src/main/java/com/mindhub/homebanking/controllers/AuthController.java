@@ -61,6 +61,9 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
 
+        if (clientRepository.findByEmail(registerDTO.email()) != null) {
+            return new ResponseEntity<>("Email is already registered", HttpStatus.FORBIDDEN);
+        }
         if (registerDTO.firstName().isBlank()) {
             return new ResponseEntity<>("The name field must not be empty", HttpStatus.BAD_REQUEST);
         }
