@@ -3,6 +3,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositorios.ClientRepository;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +18,14 @@ import java.util.stream.Collectors;
 public class ClientController {
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     // Endpoint para obtener todos los clientes
     @GetMapping("/")
     public ResponseEntity<?> getAllClients() {
-        List<Client> clients = clientRepository.findAll();
-        List<ClientDTO> clientDtolist = clients.stream().map(ClientDTO::new).collect(Collectors.toList());
-        if (!clients.isEmpty()) {
-            return new ResponseEntity<>(clientDtolist, HttpStatus.OK);
+        List<ClientDTO> clientsDtoList = clientService.getListClientsDTO();
+        if (!clientsDtoList.isEmpty()) {
+            return new ResponseEntity<>(clientsDtoList, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("No se han encontrado clientes", HttpStatus.NOT_FOUND);
         }
@@ -34,9 +34,8 @@ public class ClientController {
     // Endpoint para buscar un cliente por su ID
     @GetMapping("/{id}")
     public ResponseEntity<?> getClientById(@PathVariable Long id) {
-        Optional<Client> clienteOptional = clientRepository.findById(id);
-        if (clienteOptional.isPresent()) {
-            Client client = clienteOptional.get();
+        Client client = clientService.getClientById(id);
+        if (client != null) {
             ClientDTO clientDTO = new ClientDTO(client);
             return new ResponseEntity<>(clientDTO, HttpStatus.OK);
         } else {

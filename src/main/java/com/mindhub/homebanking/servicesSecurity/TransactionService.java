@@ -1,6 +1,5 @@
 package com.mindhub.homebanking.servicesSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.mindhub.homebanking.dtos.TransferRequestDTO;
@@ -50,7 +49,7 @@ public class TransactionService {
         }
 
         // Verificación de que la cuenta de origen pertenezca al cliente autenticado
-        if (!fromAccount.getCliente().equals(client)) {
+        if (!fromAccount.getClient().equals(client)) {
             throw new Exception("La cuenta de origen no pertenece al cliente autenticado");
         }
 
@@ -61,13 +60,13 @@ public class TransactionService {
 
         // Actualizar el saldo de la cuenta de origen y crear la transacción de débito
         fromAccount.setSaldo(fromAccount.getSaldo() - transferRequest.amount());
-        Transaction debitTransaction = new Transaction(-transferRequest.amount(), transferRequest.description() + " " + transferRequest.toAccountNumber(), LocalDateTime.now(), TypeTransaction.DEBITO);
+        Transaction debitTransaction = new Transaction(-transferRequest.amount(), transferRequest.description() + " " + transferRequest.toAccountNumber(), LocalDateTime.now(), TypeTransaction.DEBIT);
         debitTransaction.setCuenta(fromAccount);
         transactionRepository.save(debitTransaction);
 
         // Actualizar el saldo de la cuenta de destino y crear la transacción de crédito
         toAccount.setSaldo(toAccount.getSaldo() + transferRequest.amount());
-        Transaction creditTransaction = new Transaction(transferRequest.amount(), transferRequest.description() + " " + transferRequest.fromAccountNumber(), LocalDateTime.now(), TypeTransaction.CREDITO);
+        Transaction creditTransaction = new Transaction(transferRequest.amount(), transferRequest.description() + " " + transferRequest.fromAccountNumber(), LocalDateTime.now(), TypeTransaction.CREDIT);
         creditTransaction.setCuenta(toAccount);
         transactionRepository.save(creditTransaction);
 

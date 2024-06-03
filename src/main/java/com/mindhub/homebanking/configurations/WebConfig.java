@@ -34,7 +34,7 @@ public class WebConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/auth/login", "/api/auth/register", "/h2-console/**").permitAll()
+                      .requestMatchers("/api/auth/login", "/api/auth/register", "/h2-console/**").permitAll()
 //                        .requestMatchers("/api/clients").hasRole("ADMIN")
 //                        .requestMatchers("/api/clients/**").hasRole("ADMIN")
 //                        .requestMatchers("/api/accounts").hasRole("ADMIN")

@@ -8,6 +8,7 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositorios.AccountRepository;
 import com.mindhub.homebanking.repositorios.ClientRepository;
+import com.mindhub.homebanking.services.ClientService;
 import com.mindhub.homebanking.servicesSecurity.JwtUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -61,7 +62,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
 
-        if (clientRepository.findByEmail(registerDTO.email()) != null) {
+        if (clientService.getClientByEmail(registerDTO.email()) != null) {
             return new ResponseEntity<>("Email is already registered", HttpStatus.FORBIDDEN);
         }
         if (registerDTO.firstName().isBlank()) {
@@ -75,6 +76,12 @@ public class AuthController {
         }
         if (registerDTO.password().isBlank()) {
             return new ResponseEntity<>("The password field must not be empty", HttpStatus.BAD_REQUEST);
+        }
+        if (registerDTO.password().length() < 8) {
+            return new ResponseEntity<>("The password must have at least 8 characters", HttpStatus.BAD_REQUEST);
+        }
+        if (clientService.existEmail(registerDTO.email())) {
+            return new ResponseEntity<>("Email is already registered", HttpStatus.FORBIDDEN);
         }
 
         Client client = new Client(
@@ -90,7 +97,7 @@ public class AuthController {
         Account account = new Account(number, LocalDate.now(), 0.0);
         account.setClient(client);
         client.addAccount(account);
-        clientRepository.save(client);
+        clientService.saveClient(client);
         accountRepository.save(account);
 
         return new ResponseEntity<>("Client created", HttpStatus.CREATED);
@@ -98,7 +105,7 @@ public class AuthController {
 
     @GetMapping("/current")
     public ResponseEntity<?> getClient(Authentication authentication) {
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.getClientByEmail(authentication.getName());
         return ResponseEntity.ok(new ClientDTO(client));
     }
 }

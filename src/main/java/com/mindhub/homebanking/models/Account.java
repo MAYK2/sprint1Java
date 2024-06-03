@@ -64,11 +64,11 @@ public class Account {
         this.client = client;
     }
 
-    public Client getCliente() {
+    public Client getClient() {
         return client;
     }
 
-    public void agregarTransaccion(Transaction transaction) {
+    public void addTransaction(Transaction transaction) {
         transacciones.add(transaction);
         transaction.setCuenta(this);
     }
