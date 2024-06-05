@@ -11,18 +11,21 @@ public class Transaction {
     private long id;
     private Double amount;
     private String description;
-    private LocalDateTime fecha;
-    private TypeTransaction tipo;
+    private LocalDateTime date;
+
+    @Enumerated(EnumType.STRING)
+    private TypeTransaction type;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
 
 
-    public Transaction(Double amount, String description, LocalDateTime fecha, TypeTransaction tipo) {
+    public Transaction(Double amount, String description, LocalDateTime date, TypeTransaction type) {
         this.amount = amount;
         this.description = description;
-        this.fecha = fecha;
-        this.tipo = tipo;
+        this.date = date;
+        this.type = type;
     }
 
     public Transaction() {
@@ -52,19 +55,19 @@ public class Transaction {
         this.description = description;
     }
 
-    public LocalDateTime getFecha() {
-        return fecha;
+    public LocalDateTime getDate() {
+        return date;
     }
 
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
+    public void setDate(LocalDateTime fecha) {
+        this.date = fecha;
     }
 
-    public TypeTransaction getTipo() {
-        return tipo;
+    public TypeTransaction getType() {
+        return type;
     }
 
-    public void setTipo(TypeTransaction tipo) {
-        this.tipo = tipo;
+    public void setType(TypeTransaction type) {
+        this.type = type;
     }
 }

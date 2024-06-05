@@ -40,18 +40,18 @@ public class HomebankingApplication {
 //            Account account4 = new Account("VIN004", today, 4500.0);
 //
 //            // Crear las transacciones
-////            Transaction transaction1 = new Transaction(-5000.0, "Supermercado", dateTime, TypeTransaction.DEBITO);
-////            Transaction transaction2 = new Transaction(-2500.0, "Kiosco", dateTime, TypeTransaction.DEBITO);
-////            Transaction transaction3 = new Transaction(-1000.0, "Alimento", dateTime, TypeTransaction.DEBITO);
-////            Transaction transaction4 = new Transaction(10000.0, "Steam", dateTime, TypeTransaction.CREDITO);
-////            Transaction transaction5 = new Transaction(25000.0, "Zapatillas", dateTime, TypeTransaction.CREDITO);
-////            Transaction transaction6 = new Transaction(35000.0, "Zapatos", dateTime, TypeTransaction.CREDITO);
-////            Transaction transaction7 = new Transaction(-15000.0, "Gimnasio", dateTime, TypeTransaction.DEBITO);
-////            Transaction transaction8 = new Transaction(-15000.0, "Alcohol", dateTime, TypeTransaction.DEBITO);
-////            Transaction transaction9 = new Transaction(-15000.0, "MercadoPago", dateTime, TypeTransaction.DEBITO);
-////            Transaction transaction10 = new Transaction(15000.0, "MercadoLibre", dateTime, TypeTransaction.CREDITO);
-////            Transaction transaction11 = new Transaction(15000.0, "Neumaticos", dateTime, TypeTransaction.CREDITO);
-////            Transaction transaction12 = new Transaction(-15000.0, "Café", dateTime, TypeTransaction.DEBITO);
+//            Transaction transaction1 = new Transaction(-5000.0, "Supermercado", dateTime, TypeTransaction.DEBIT);
+//            Transaction transaction2 = new Transaction(-2500.0, "Kiosco", dateTime, TypeTransaction.DEBIT);
+//            Transaction transaction3 = new Transaction(-1000.0, "Alimento", dateTime, TypeTransaction.DEBIT);
+//            Transaction transaction4 = new Transaction(10000.0, "Steam", dateTime, TypeTransaction.CREDIT);
+//            Transaction transaction5 = new Transaction(25000.0, "Compra de zapatillas", dateTime, TypeTransaction.CREDIT);
+//            Transaction transaction6 = new Transaction(35000.0, "Compra de Zapatos", dateTime, TypeTransaction.CREDIT);
+//            Transaction transaction7 = new Transaction(-15000.0, "Cuota de gimnasio", dateTime, TypeTransaction.DEBIT);
+//            Transaction transaction8 = new Transaction(-15000.0, "Bebidas", dateTime, TypeTransaction.DEBIT);
+////            Transaction transaction9 = new Transaction(-15000.0, "MercadoPago", dateTime, TypeTransaction.DEBIT);
+////            Transaction transaction10 = new Transaction(15000.0, "MercadoLibre", dateTime, TypeTransaction.CREDIT);
+////            Transaction transaction11 = new Transaction(15000.0, "Neumaticos", dateTime, TypeTransaction.CREDIT);
+////            Transaction transaction12 = new Transaction(-15000.0, "Café", dateTime, TypeTransaction.DEBIT);
 //
 //            Loan hipotecario = new Loan("Hipotecario", 500000, List.of(12, 24, 36, 48, 60));
 //            Loan personal = new Loan("Personal", 100000, List.of(6, 12, 24));
@@ -86,27 +86,27 @@ public class HomebankingApplication {
 //            client2.addAccount(account4);
 //
 //            // Guardar las transacciones en el repositorio
-////            transactionRepository.save(transaction1);
-////            transactionRepository.save(transaction2);
-////            transactionRepository.save(transaction3);
-////            transactionRepository.save(transaction4);
-////            transactionRepository.save(transaction5);
-////            transactionRepository.save(transaction6);
-////            transactionRepository.save(transaction7);
-////            transactionRepository.save(transaction8);
+//            transactionRepository.save(transaction1);
+//            transactionRepository.save(transaction2);
+//            transactionRepository.save(transaction3);
+//            transactionRepository.save(transaction4);
+//            transactionRepository.save(transaction5);
+//            transactionRepository.save(transaction6);
+//            transactionRepository.save(transaction7);
+//            transactionRepository.save(transaction8);
 ////            transactionRepository.save(transaction9);
 ////            transactionRepository.save(transaction10);
 ////            transactionRepository.save(transaction11);
 ////            transactionRepository.save(transaction12);
 ////
-////            account1.agregarTransaccion(transaction1);
-////            account1.agregarTransaccion(transaction2);
-////            account1.agregarTransaccion(transaction3);
-////            account2.agregarTransaccion(transaction4);
-////            account2.agregarTransaccion(transaction5);
-////            account2.agregarTransaccion(transaction6);
-////            account3.agregarTransaccion(transaction7);
-////            account3.agregarTransaccion(transaction8);
+//            account1.addTransaction(transaction1);
+//            account1.addTransaction(transaction2);
+//            account1.addTransaction(transaction3);
+//            account2.addTransaction(transaction4);
+//            account2.addTransaction(transaction5);
+//            account2.addTransaction(transaction6);
+//            account3.addTransaction(transaction7);
+//            account3.addTransaction(transaction8);
 ////            account3.agregarTransaccion(transaction9);
 ////            account4.agregarTransaccion(transaction10);
 ////            account4.agregarTransaccion(transaction11);
