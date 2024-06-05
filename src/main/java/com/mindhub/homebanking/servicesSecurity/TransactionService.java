@@ -54,18 +54,18 @@ public class TransactionService {
         }
 
         // Verificación de que la cuenta de origen tenga el monto disponible
-        if (fromAccount.getSaldo() < transferRequest.amount()) {
+        if (fromAccount.getBalance() < transferRequest.amount()) {
             throw new Exception("Saldo insuficiente en la cuenta de origen");
         }
 
         // Actualizar el saldo de la cuenta de origen y crear la transacción de débito
-        fromAccount.setSaldo(fromAccount.getSaldo() - transferRequest.amount());
+        fromAccount.setBalance(fromAccount.getBalance() - transferRequest.amount());
         Transaction debitTransaction = new Transaction(-transferRequest.amount(), transferRequest.description() + " " + transferRequest.toAccountNumber(), LocalDateTime.now(), TypeTransaction.DEBIT);
         debitTransaction.setCuenta(fromAccount);
         transactionRepository.save(debitTransaction);
 
         // Actualizar el saldo de la cuenta de destino y crear la transacción de crédito
-        toAccount.setSaldo(toAccount.getSaldo() + transferRequest.amount());
+        toAccount.setBalance(toAccount.getBalance() + transferRequest.amount());
         Transaction creditTransaction = new Transaction(transferRequest.amount(), transferRequest.description() + " " + transferRequest.fromAccountNumber(), LocalDateTime.now(), TypeTransaction.CREDIT);
         creditTransaction.setCuenta(toAccount);
         transactionRepository.save(creditTransaction);
@@ -78,7 +78,7 @@ public class TransactionService {
     }
     public List<Transaction> getTransactionsForClient(Client client) {
         return client.getAccounts().stream()
-                .flatMap(account -> account.getTransacciones().stream())
+                .flatMap(account -> account.getTransactions().stream())
                 .collect(Collectors.toList());
     }
 }

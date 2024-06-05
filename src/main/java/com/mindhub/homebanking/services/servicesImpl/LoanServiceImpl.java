@@ -84,7 +84,7 @@ public class LoanServiceImpl implements LoanService {
         Transaction transaction = new Transaction(loanAplicationDTO.quantity(), description, date, TypeTransaction.CREDIT);
         destinationAccount.addTransaction(transaction);
         transactionRepository.save(transaction);
-        destinationAccount.setSaldo(destinationAccount.getSaldo() + loanAplicationDTO.quantity());
+        destinationAccount.setBalance(destinationAccount.getBalance() + loanAplicationDTO.quantity());
         accountRepository.save(destinationAccount);
 
         return new ResponseEntity<>("Loan created and credited to destination account", HttpStatus.CREATED);

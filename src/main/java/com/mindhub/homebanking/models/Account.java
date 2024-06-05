@@ -13,23 +13,23 @@ public class Account {
     private long id;
 
     private String numberAccount;
-    private LocalDate fechaCreacion;
-    private Double saldo;
+    private LocalDate creationDate;
+    private Double balance;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client")
     private Client client;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<Transaction> transacciones = new ArrayList<>();
+    private List<Transaction> transactions = new ArrayList<>();
 
     public Account() {
     }
 
-    public Account(String numero, LocalDate fechaCreacion, Double saldo) {
+    public Account(String numero, LocalDate creationDate, Double balance) {
         this.numberAccount = numero;
-        this.fechaCreacion = fechaCreacion;
-        this.saldo = saldo;
+        this.creationDate = creationDate;
+        this.balance = balance;
     }
 
     public long getId() {
@@ -44,20 +44,20 @@ public class Account {
         this.numberAccount = numero;
     }
 
-    public LocalDate getFechaCreacion() {
-        return fechaCreacion;
+    public LocalDate getCreationDate() {
+        return creationDate;
     }
 
-    public void setFechaCreacion(LocalDate fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public void setCreationDate(LocalDate fechaCreacion) {
+        this.creationDate = fechaCreacion;
     }
 
-    public Double getSaldo() {
-        return saldo;
+    public Double getBalance() {
+        return balance;
     }
 
-    public void setSaldo(Double saldo) {
-        this.saldo = saldo;
+    public void setBalance(Double saldo) {
+        this.balance = saldo;
     }
 
     public void setClient(Client client) {
@@ -69,16 +69,16 @@ public class Account {
     }
 
     public void addTransaction(Transaction transaction) {
-        transacciones.add(transaction);
+        transactions.add(transaction);
         transaction.setCuenta(this);
     }
 
-    public void setTransacciones(List<Transaction> transacciones) {
-        this.transacciones = transacciones;
+    public void setTransactions(List<Transaction> transacciones) {
+        this.transactions = transacciones;
     }
 
-    public List<Transaction> getTransacciones() {
-        return transacciones;
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 }
 

@@ -16,9 +16,9 @@ public class AccountDTO {
     public AccountDTO(Account account) {
         this.id = account.getId();
         this.numero = account.getNumero();
-        this.fechaCreacion = account.getFechaCreacion();
-        this.saldo = account.getSaldo();
-        this.transacciones = account.getTransacciones().stream().map(TransactionDTO::new).collect(Collectors.toList());
+        this.fechaCreacion = account.getCreationDate();
+        this.saldo = account.getBalance();
+        this.transacciones = account.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
     }
 
     public long getId() {
