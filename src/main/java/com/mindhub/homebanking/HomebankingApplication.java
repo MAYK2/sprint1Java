@@ -1,17 +1,12 @@
 package com.mindhub.homebanking;
 
-import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositorios.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mindhub.homebanking.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
@@ -22,12 +17,12 @@ public class HomebankingApplication {
 
     @Bean
     public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository cuentaRepositorio,
-                                      TransactionRepository transactionRepository, LoanRepository loanRepository,
-                                      ClientLoanRepository clientLoanRepository, CardRepository cardRepository,
-                                      PasswordEncoder passwordEncoder) {  // Inyección del PasswordEncoder
+                                      TransactionsRepository transactionRepository, LoanRepository loanRepository,
+                                      ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {  // Inyección del PasswordEncoder
         return args -> {
 //            Client client = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("123"));  // Usar el PasswordEncoder
 //            Client client2 = new Client("Erick", "Guevara", "guevara@guevara.com", passwordEncoder.encode("456"));  // Usar el PasswordEncoder
+//            Client admin = new Client("Mayco", "Dominguez", "mayco@admin.com", passwordEncoder.encode("contraseña"));
 //            LocalDate today = LocalDate.now();
 //            LocalDate tomorrow = today.plusDays(1);
 //            LocalDateTime dateTime = LocalDateTime.of(2024, 5, 6, 15, 30, 0);
@@ -65,9 +60,9 @@ public class HomebankingApplication {
 //            ClientLoan erickClientLoan2 = new ClientLoan(200000, 36);
 //
 //            // Crear las tarjetas
-//            Card cardMelbaDebit = new Card("4498-9824-1662-0586", 333, today, fiveYears, CreditCardType.DEBIT, ColorCard.GOLD, "Melba Morel");
-//            Card cardMelbaCredit = new Card("4498-9423-1152-5083", 550, today, fiveYears, CreditCardType.CREDIT, ColorCard.TITANIUM, "Melba Morel");
-//            Card cardErickDebit = new Card("4498-3770-3454-1222", 248, today, fiveYears, CreditCardType.DEBIT, ColorCard.SILVER, "Erick Guevara");
+//            Card cardMelbaDebit = new Card("4498-9824-1662-0586", 333, today, fiveYears, CardType.DEBIT, ColorCard.GOLD, "Melba Morel");
+//            Card cardMelbaCredit = new Card("4498-9423-1152-5083", 550, today, fiveYears, CardType.CREDIT, ColorCard.TITANIUM, "Melba Morel");
+//            Card cardErickDebit = new Card("4498-3770-3454-1222", 248, today, fiveYears, CardType.DEBIT, ColorCard.SILVER, "Erick Guevara");
 //
 //            // Guardar los clientes en el repositorio primero
 //            clientRepository.save(client);
@@ -149,6 +144,7 @@ public class HomebankingApplication {
 //            // Guardar los clientes actualizados en el repositorio
 //            clientRepository.save(client);
 //            clientRepository.save(client2);
+//            clientRepository.save(admin);
         };
     }
 }

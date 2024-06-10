@@ -14,18 +14,23 @@ public class Card {
     private LocalDate thrudate;
     private LocalDate fromdate;
     private int cvv;
-    private CreditCardType type;
+
+    @Enumerated (EnumType.STRING)
+    private CardType type;
+
+    @Enumerated (EnumType.STRING)
     private ColorCard color;
+
     private String cardholder;
 
     @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "client_id")
     Client client;
 
     public Card() {
     }
 
-    public Card(String number, int cvv, LocalDate fromdate, LocalDate thrudate, CreditCardType type, ColorCard color, String cardholder) {
+    public Card(String number, int cvv, LocalDate fromdate, LocalDate thrudate, CardType type, ColorCard color, String cardholder) {
         this.number = number;
         this.cvv = cvv;
         this.fromdate = fromdate;
@@ -71,11 +76,11 @@ public class Card {
         this.cvv = cvv;
     }
 
-    public CreditCardType getType() {
+    public CardType getType() {
         return type;
     }
 
-    public void setType(CreditCardType type) {
+    public void setType(CardType type) {
         type = type;
     }
 

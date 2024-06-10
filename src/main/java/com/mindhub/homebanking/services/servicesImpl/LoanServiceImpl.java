@@ -3,10 +3,10 @@ package com.mindhub.homebanking.services.servicesImpl;
 import com.mindhub.homebanking.dtos.LoanAplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositorios.AccountRepository;
-import com.mindhub.homebanking.repositorios.ClientRepository;
-import com.mindhub.homebanking.repositorios.LoanRepository;
-import com.mindhub.homebanking.repositorios.TransactionRepository;
+import com.mindhub.homebanking.repositories.AccountRepository;
+import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.repositories.LoanRepository;
+import com.mindhub.homebanking.repositories.TransactionsRepository;
 import com.mindhub.homebanking.services.LoanService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +24,11 @@ public class LoanServiceImpl implements LoanService {
     private LoanRepository loanRepository;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientRepository clientRepository; //*
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountRepository accountRepository; //*
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionsRepository transactionRepository;//*
 
     @Override
     public List<LoanDTO> getLoansDTO() {

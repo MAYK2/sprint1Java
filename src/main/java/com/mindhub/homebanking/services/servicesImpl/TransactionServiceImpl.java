@@ -1,4 +1,5 @@
-package com.mindhub.homebanking.servicesSecurity;
+package com.mindhub.homebanking.services.servicesImpl;
+import com.mindhub.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,21 +8,21 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.models.TypeTransaction;
-import com.mindhub.homebanking.repositorios.AccountRepository;
-import com.mindhub.homebanking.repositorios.TransactionRepository;
+import com.mindhub.homebanking.repositories.AccountRepository;
+import com.mindhub.homebanking.repositories.TransactionsRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TransactionService {
+public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountRepository accountRepository; //*
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionsRepository transactionRepository;
 
     @Transactional
     public void transfer(TransferRequestDTO transferRequest, Client client) throws Exception {

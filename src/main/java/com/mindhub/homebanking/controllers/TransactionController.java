@@ -3,8 +3,9 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.TransactionDTO;
 import com.mindhub.homebanking.dtos.TransferRequestDTO;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.repositorios.ClientRepository;
-import com.mindhub.homebanking.servicesSecurity.TransactionService;
+import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.TransactionService;
+import com.mindhub.homebanking.services.servicesImpl.TransactionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,8 @@ public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
-
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @PostMapping("/transfer")
     public ResponseEntity<?> transfer(@RequestBody TransferRequestDTO transferRequest, Authentication authentication) {
@@ -31,7 +31,7 @@ public class TransactionController {
             String userEmail = authentication.getName();
 
             // Busca el cliente en la base de datos utilizando el correo electrónico
-            Client client = clientRepository.findByEmail(userEmail);
+            Client client = clientService.getClientByEmail(userEmail);
 
             // Llama al método de transferencia en el servicio de transacciones
             transactionService.transfer(transferRequest, client);
@@ -49,7 +49,7 @@ public class TransactionController {
             String userEmail = authentication.getName();
 
             // Busca el cliente en la base de datos utilizando el correo electrónico
-            Client client = clientRepository.findByEmail(userEmail);
+            Client client = clientService.getClientByEmail(userEmail);
 
             // Obtiene el historial de transacciones para el cliente
             List<TransactionDTO> transactionDTOs = transactionService.getTransactionsForClient(client).stream()

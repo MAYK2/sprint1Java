@@ -131,4 +131,8 @@ public class Client {
         card.setClient(this);
         cards.add(card);
     }
+
+    public boolean isAdmin() {
+        return email.contains("@admin");
+    }
 }

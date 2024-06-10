@@ -17,7 +17,7 @@ public class Account {
     private Double balance;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client")
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
