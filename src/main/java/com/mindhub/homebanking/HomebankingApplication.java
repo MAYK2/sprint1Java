@@ -1,5 +1,6 @@
 package com.mindhub.homebanking;
 
+import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -7,6 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
@@ -18,16 +23,16 @@ public class HomebankingApplication {
     @Bean
     public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository cuentaRepositorio,
                                       TransactionsRepository transactionRepository, LoanRepository loanRepository,
-                                      ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {  // Inyección del PasswordEncoder
+                                      ClientLoanRepository clientLoanRepository, CardRepository cardRepository, PasswordEncoder passwordEncoder) {  // Inyección del PasswordEncoder
         return args -> {
-//            Client client = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("123"));  // Usar el PasswordEncoder
-//            Client client2 = new Client("Erick", "Guevara", "guevara@guevara.com", passwordEncoder.encode("456"));  // Usar el PasswordEncoder
-//            Client admin = new Client("Mayco", "Dominguez", "mayco@admin.com", passwordEncoder.encode("contraseña"));
-//            LocalDate today = LocalDate.now();
-//            LocalDate tomorrow = today.plusDays(1);
-//            LocalDateTime dateTime = LocalDateTime.of(2024, 5, 6, 15, 30, 0);
-//            LocalDate fiveYears = LocalDate.now().plusYears(5);
-//
+            Client client = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("123"));  // Usar el PasswordEncoder
+            Client client2 = new Client("Erick", "Guevara", "guevara@guevara.com", passwordEncoder.encode("456"));  // Usar el PasswordEncoder
+            Client admin = new Client("Mayco", "Dominguez", "mayco@admin.com", passwordEncoder.encode("contraseña"));
+            LocalDate today = LocalDate.now();
+            LocalDate tomorrow = today.plusDays(1);
+            LocalDateTime dateTime = LocalDateTime.of(2024, 5, 6, 15, 30, 0);
+            LocalDate fiveYears = LocalDate.now().plusYears(5);
+
 //            // Crear las cuentas
 //            Account account1 = new Account("VIN001", today, 5000.0);
 //            Account account2 = new Account("VIN002", tomorrow, 7500.0);
@@ -67,6 +72,7 @@ public class HomebankingApplication {
 //            // Guardar los clientes en el repositorio primero
 //            clientRepository.save(client);
 //            clientRepository.save(client2);
+//            clientRepository.save(admin);
 //
 //            // Guardar las cuentas en el repositorio
 //            cuentaRepositorio.save(account1);
