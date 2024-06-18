@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -82,4 +83,17 @@ public class AccountServiceImpl implements AccountService {
     public Account findByNumberAccount(String numberAccount) {
         return null;
     }
+
+    @Override
+    public ResponseEntity<List<AccountDTO>> getAccountsByClient(Authentication authentication) {
+        Client client = clientService.getClientByEmail(authentication.getName());
+        List<Account> accounts = new ArrayList<>(client.getAccounts());  // Convert Set<Account> to List<Account>
+        List<AccountDTO> accountDTOList = accounts.stream().map(AccountDTO::new).collect(Collectors.toList());
+        if (!accounts.isEmpty()) {
+            return new ResponseEntity<>(accountDTOList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(List.of(), HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
