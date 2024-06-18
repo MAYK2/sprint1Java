@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class AccountController {
+
     @Autowired
     private AccountService accountService;
 
@@ -25,9 +26,14 @@ public class AccountController {
         return accountService.getAccountById(id);
     }
 
+    // Método GET para obtener cuentas del cliente autenticado
+    @GetMapping("/clients/current/accounts")
+    public ResponseEntity<List<AccountDTO>> getClientAccounts(Authentication authentication) {
+        return accountService.getClientAccounts(authentication);
+    }
+
     @PostMapping("/clients/current/accounts")
     public ResponseEntity<String> createAccount(Authentication authentication) {
         return accountService.createAccount(authentication);
     }
-
 }
