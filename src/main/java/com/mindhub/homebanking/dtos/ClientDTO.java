@@ -10,7 +10,7 @@ public class ClientDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private List<AccountDTO> cuentas;
+    private List<AccountDTO> accounts;
     private List<ClientLoanDTO> loans;
     private List<CardDTO> cards;
 
@@ -21,7 +21,7 @@ public class ClientDTO {
         this.lastName = client.getLastName();
         this.email = client.getEmail();
         // Mapear las cuentas del cliente a DTOs de cuentas
-        this.cuentas = client.getCuentas().stream().map(AccountDTO::new).collect(Collectors.toList());
+        this.accounts = client.getCuentas().stream().map(AccountDTO::new).collect(Collectors.toList());
         this.loans = client.getClientLoans().stream().map(ClientLoanDTO::new).collect(Collectors.toList());
         this.cards = client.getCards().stream().map(CardDTO::new).collect(Collectors.toList());
     }
@@ -42,8 +42,8 @@ public class ClientDTO {
         return email;
     }
 
-    public List<AccountDTO> getCuentas() {
-        return cuentas;
+    public List<AccountDTO> getAccounts() {
+        return accounts;
     }
     public List<ClientLoanDTO> getLoans() {
         return loans;

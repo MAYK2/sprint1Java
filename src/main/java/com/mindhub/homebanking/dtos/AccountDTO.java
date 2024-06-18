@@ -8,36 +8,36 @@ import java.util.stream.Collectors;
 
 public class AccountDTO {
     long id;
-    private String numero;
-    private LocalDate fechaCreacion;
-    private Double saldo;
-    private List<TransactionDTO> transacciones;
+    private String number;
+    private LocalDate CreationDate;
+    private Double balance;
+    private List<TransactionDTO> transactions;
 
     public AccountDTO(Account account) {
         this.id = account.getId();
-        this.numero = account.getNumero();
-        this.fechaCreacion = account.getCreationDate();
-        this.saldo = account.getBalance();
-        this.transacciones = account.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
+        this.number = account.getNumero();
+        this.CreationDate = account.getCreationDate();
+        this.balance = account.getBalance();
+        this.transactions = account.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
     }
 
     public long getId() {
         return id;
     }
 
-    public String getNumero() {
-        return numero;
+    public String getNumber() {
+        return number;
     }
 
-    public LocalDate getFechaCreacion() {
-        return fechaCreacion;
+    public LocalDate getCreationDate() {
+        return CreationDate;
     }
 
-    public Double getSaldo() {
-        return saldo;
+    public Double getBalance() {
+        return balance;
     }
 
-    public List<TransactionDTO> getTransacciones() {
-        return transacciones;
+    public List<TransactionDTO> getTransactions() {
+        return transactions;
     }
 }
