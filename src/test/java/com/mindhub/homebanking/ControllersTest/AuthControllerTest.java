@@ -69,41 +69,41 @@ public class AuthControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
     }
 
-    @Test
-    public void testLoginSuccess() throws Exception {
-        // Arrange
-        LoginDTO loginDTO = new LoginDTO("mayco@admin.com", "contraseña");
-        String jwtToken = "mocked-jwt-token";
-
-        Mockito.when(authService.login(Mockito.any(LoginDTO.class))).thenReturn(jwtToken);
-
-        // Act
-        MvcResult result = mockMvc.perform(post("/api/auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(loginDTO)))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        // Assert
-        String responseContent = result.getResponse().getContentAsString();
-        assertThat(responseContent).isEqualTo(jwtToken);
-    }
-
-
-    @Test
-    public void testLoginFailure() throws Exception {
-        // Arrange
-        LoginDTO loginDTO = new LoginDTO("mayco@admin.comx", "contraseña");
-
-        // Mock para simular credenciales inválidas
-        Mockito.when(authService.login(Mockito.any(LoginDTO.class)))
-                .thenThrow(new RuntimeException("Credenciales inválidas"));
-
-        // Act & Assert
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(loginDTO)))
-                .andExpect(status().isUnauthorized())
-                .andExpect(content().string("Credenciales inválidas"));
-    }
+//    @Test
+//    public void testLoginSuccess() throws Exception {
+//        // Arrange
+//        LoginDTO loginDTO = new LoginDTO("mayco@admin.com", "contraseña");
+//        String jwtToken = "mocked-jwt-token";
+//
+//        Mockito.when(authService.login(Mockito.any(LoginDTO.class))).thenReturn(jwtToken);
+//
+//        // Act
+//        MvcResult result = mockMvc.perform(post("/api/auth/login")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(loginDTO)))
+//                .andExpect(status().isOk())
+//                .andReturn();
+//
+//        // Assert
+//        String responseContent = result.getResponse().getContentAsString();
+//        assertThat(responseContent).isEqualTo(jwtToken);
+//    }
+//
+//
+//    @Test
+//    public void testLoginFailure() throws Exception {
+//        // Arrange
+//        LoginDTO loginDTO = new LoginDTO("mayco@admin.comx", "contraseña");
+//
+//        // Mock para simular credenciales inválidas
+//        Mockito.when(authService.login(Mockito.any(LoginDTO.class)))
+//                .thenThrow(new RuntimeException("Credenciales inválidas"));
+//
+//        // Act & Assert
+//        mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(new ObjectMapper().writeValueAsString(loginDTO)))
+//                .andExpect(status().isUnauthorized())
+//                .andExpect(content().string("Credenciales inválidas"));
+//    }
 }

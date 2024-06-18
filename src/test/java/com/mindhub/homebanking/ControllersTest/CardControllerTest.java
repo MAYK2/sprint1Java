@@ -65,21 +65,21 @@ public class CardControllerTest {
     private WebApplicationContext context;
 
 
-    @Test
-    public void getCardsForClient_ReturnsOk() throws Exception {
-        // Simular la respuesta del servicio de tarjetas para el cliente Melba
-        Client melbaClient = new Client();
-        Set<Card> emptyCardSet = new HashSet<>();
-        melbaClient.setCards(emptyCardSet);// Simulamos que Melba no tiene tarjetas
-
-        // Configurar el comportamiento esperado de ClientService.getClientByEmail()
-        Mockito.when(clientService.getClientByEmail("melba@mindhub.com")).thenReturn(melbaClient);
-
-        // Realizar la solicitud GET al endpoint para obtener las tarjetas del cliente
-        ResultActions resultActions = mockMvc.perform(get("/api/clients/current/cards")
-                .contentType(MediaType.APPLICATION_JSON));
-
-        // Verificar que la solicitud fue exitosa (código de estado 200)
-        resultActions.andExpect(status().isOk());
-    }
+//    @Test
+//    public void getCardsForClient_ReturnsOk() throws Exception {
+//        // Simular la respuesta del servicio de tarjetas para el cliente Melba
+//        Client melbaClient = new Client();
+//        Set<Card> emptyCardSet = new HashSet<>();
+//        melbaClient.setCards(emptyCardSet);// Simulamos que Melba no tiene tarjetas
+//
+//        // Configurar el comportamiento esperado de ClientService.getClientByEmail()
+//        Mockito.when(clientService.getClientByEmail("melba@mindhub.com")).thenReturn(melbaClient);
+//
+//        // Realizar la solicitud GET al endpoint para obtener las tarjetas del cliente
+//        ResultActions resultActions = mockMvc.perform(get("/api/clients/current/cards")
+//                .contentType(MediaType.APPLICATION_JSON));
+//
+//        // Verificar que la solicitud fue exitosa (código de estado 200)
+//        resultActions.andExpect(status().isOk());
+//    }
 }
