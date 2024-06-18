@@ -10,12 +10,12 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @TestConfiguration
 public class TestSecurityConfig {
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.withUsername("melba@mindhub.com")
-                .password("password")
-                .roles("CLIENT")
-                .build();
-        return new InMemoryUserDetailsManager(user);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        UserDetails user = User.withUsername("melba@mindhub.com")
+//                .password("password")
+//                .roles("CLIENT")
+//                .build();
+//        return new InMemoryUserDetailsManager(user);
+//    }
 }
