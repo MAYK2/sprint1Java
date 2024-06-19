@@ -96,4 +96,22 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    @Override
+    public ResponseEntity<AccountDTO> getClientAccountById(Long id, Authentication authentication) {
+        String clientEmail = authentication.getName();
+        Client client = clientService.getClientByEmail(clientEmail);
+
+        if (client == null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Account account = accountRepository.findById(id).orElse(null);
+
+        if (account == null || !client.getAccounts().contains(account)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        AccountDTO accountDTO = new AccountDTO(account);
+        return new ResponseEntity<>(accountDTO, HttpStatus.OK);
+    }
 }

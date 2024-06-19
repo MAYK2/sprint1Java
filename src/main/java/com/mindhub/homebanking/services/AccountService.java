@@ -14,4 +14,5 @@ public interface AccountService {
     void SaveAccount(Account account);
     Account findByNumberAccount(String numberAccount);
     ResponseEntity<List<AccountDTO>> getAccountsByClient(Authentication authentication);
+    ResponseEntity<AccountDTO> getClientAccountById(Long id, Authentication authentication); // Nueva firma del método
 }

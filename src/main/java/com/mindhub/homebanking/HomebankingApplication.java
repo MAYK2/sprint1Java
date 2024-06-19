@@ -1,5 +1,6 @@
 package com.mindhub.homebanking;
 
+import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -7,6 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
@@ -16,9 +21,9 @@ public class HomebankingApplication {
     }
 
     @Bean
-    public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository cuentaRepositorio,
+    public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository,
                                       TransactionsRepository transactionRepository, LoanRepository loanRepository,
-                                      ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {  // Inyección del PasswordEncoder
+                                      ClientLoanRepository clientLoanRepository, CardRepository cardRepository, PasswordEncoder passwordEncoder) {  // Inyección del PasswordEncoder
         return args -> {
 //            Client client = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("123"));  // Usar el PasswordEncoder
 //            Client client2 = new Client("Erick", "Guevara", "guevara@guevara.com", passwordEncoder.encode("456"));  // Usar el PasswordEncoder
@@ -40,9 +45,7 @@ public class HomebankingApplication {
 //            Transaction transaction3 = new Transaction(-1000.0, "Alimento", dateTime, TypeTransaction.DEBIT);
 //            Transaction transaction4 = new Transaction(10000.0, "Steam", dateTime, TypeTransaction.CREDIT);
 //            Transaction transaction5 = new Transaction(25000.0, "Compra de zapatillas", dateTime, TypeTransaction.CREDIT);
-//            Transaction transaction6 = new Transaction(35000.0, "Compra de Zapatos", dateTime, TypeTransaction.CREDIT);
 //            Transaction transaction7 = new Transaction(-15000.0, "Cuota de gimnasio", dateTime, TypeTransaction.DEBIT);
-//            Transaction transaction8 = new Transaction(-15000.0, "Bebidas", dateTime, TypeTransaction.DEBIT);
 ////            Transaction transaction9 = new Transaction(-15000.0, "MercadoPago", dateTime, TypeTransaction.DEBIT);
 ////            Transaction transaction10 = new Transaction(15000.0, "MercadoLibre", dateTime, TypeTransaction.CREDIT);
 ////            Transaction transaction11 = new Transaction(15000.0, "Neumaticos", dateTime, TypeTransaction.CREDIT);
@@ -69,10 +72,10 @@ public class HomebankingApplication {
 //            clientRepository.save(client2);
 //
 //            // Guardar las cuentas en el repositorio
-//            cuentaRepositorio.save(account1);
-//            cuentaRepositorio.save(account2);
-//            cuentaRepositorio.save(account3);
-//            cuentaRepositorio.save(account4);
+//            accountRepository.save(account1);
+//            accountRepository.save(account2);
+//            accountRepository.save(account3);
+//            accountRepository.save(account4);
 //
 //            // Asociar las cuentas con los clientes
 //            client.addAccount(account1);
@@ -86,9 +89,7 @@ public class HomebankingApplication {
 //            transactionRepository.save(transaction3);
 //            transactionRepository.save(transaction4);
 //            transactionRepository.save(transaction5);
-//            transactionRepository.save(transaction6);
 //            transactionRepository.save(transaction7);
-//            transactionRepository.save(transaction8);
 ////            transactionRepository.save(transaction9);
 ////            transactionRepository.save(transaction10);
 ////            transactionRepository.save(transaction11);
@@ -99,9 +100,7 @@ public class HomebankingApplication {
 //            account1.addTransaction(transaction3);
 //            account2.addTransaction(transaction4);
 //            account2.addTransaction(transaction5);
-//            account2.addTransaction(transaction6);
 //            account3.addTransaction(transaction7);
-//            account3.addTransaction(transaction8);
 ////            account3.agregarTransaccion(transaction9);
 ////            account4.agregarTransaccion(transaction10);
 ////            account4.agregarTransaccion(transaction11);

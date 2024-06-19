@@ -30,6 +30,11 @@ public class AccountController {
         return accountService.getAccountsByClient(authentication);
     }
 
+    @GetMapping("/clients/current/accounts/{id}")
+    public ResponseEntity<AccountDTO> getClientAccountById(@PathVariable Long id, Authentication authentication) {
+        return accountService.getClientAccountById(id, authentication);
+    }
+
     @PostMapping("/clients/current/accounts")
     public ResponseEntity<String> createAccount(Authentication authentication) {
         return accountService.createAccount(authentication);
