@@ -1,12 +1,10 @@
 package com.mindhub.homebanking.services.servicesImpl;
 
+import com.mindhub.homebanking.dtos.ClientLoanDTO;
 import com.mindhub.homebanking.dtos.LoanAplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.LoanRepository;
-import com.mindhub.homebanking.repositories.TransactionsRepository;
+import com.mindhub.homebanking.repositories.*;
 import com.mindhub.homebanking.services.LoanService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +27,9 @@ public class LoanServiceImpl implements LoanService {
     private AccountRepository accountRepository; //*
     @Autowired
     private TransactionsRepository transactionRepository;//*
+    @Autowired
+    private ClientLoanRepository clientLoanRepository; //*
+
 
     @Override
     public List<LoanDTO> getLoansDTO() {
@@ -98,6 +99,14 @@ public class LoanServiceImpl implements LoanService {
         } else {
             return 0.15;
         }
+    }
+    public List<ClientLoanDTO> getClientLoans(String email) {
+        Client client = clientRepository.findByEmail(email);
+        if (client == null) {
+            return List.of();
+        }
+        List<ClientLoan> clientLoans = clientLoanRepository.findByClient(client);
+        return clientLoans.stream().map(ClientLoanDTO::new).collect(Collectors.toList());
     }
 }
 

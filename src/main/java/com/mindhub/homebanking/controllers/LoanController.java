@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.controllers;
 
+import com.mindhub.homebanking.dtos.ClientLoanDTO;
 import com.mindhub.homebanking.dtos.LoanAplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.services.LoanService;
@@ -25,6 +26,15 @@ public class LoanController {
             return new ResponseEntity<>("Loans not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(loansDTO, HttpStatus.OK);
+    }
+    @GetMapping("/my-loans")
+    public ResponseEntity<?> getClientLoans(Authentication authentication) {
+        String userEmail = authentication.getName();
+        List<ClientLoanDTO> clientLoans = loanService.getClientLoans(userEmail);
+        if (clientLoans.isEmpty()) {
+            return new ResponseEntity<>("No loans found for the client", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(clientLoans, HttpStatus.OK);
     }
 
     @PostMapping("/apply")
