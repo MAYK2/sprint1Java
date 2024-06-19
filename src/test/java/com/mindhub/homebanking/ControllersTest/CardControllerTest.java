@@ -31,42 +31,42 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(CardController.class)
 public class CardControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @MockBean
+//    private ClientService clientService;
+//
+//    @MockBean
+//    private CardService cardService;
+//    @MockBean
+//    private AuthService authService;
+//
+//    @MockBean
+//    private ClientRepository clientRepository;
+//    @MockBean
+//    JwtUtilService jwtUtilService;
+//    @MockBean
+//    private AccountRepository accountRepository;
+//
+//    @MockBean
+//    private TransactionsRepository transactionsRepository;
+//
+//    @MockBean
+//    private LoanRepository loanRepository;
+//
+//    @MockBean
+//    private CardRepository cardRepository;
+//
+//    @MockBean
+//    private ClientLoanRepository clientLoanRepository;
+//
+//    @Autowired
+//    private WebApplicationContext context;
+//
 
-    @MockBean
-    private ClientService clientService;
-
-    @MockBean
-    private CardService cardService;
-    @MockBean
-    private AuthService authService;
-
-    @MockBean
-    private ClientRepository clientRepository;
-    @MockBean
-    JwtUtilService jwtUtilService;
-    @MockBean
-    private AccountRepository accountRepository;
-
-    @MockBean
-    private TransactionsRepository transactionsRepository;
-
-    @MockBean
-    private LoanRepository loanRepository;
-
-    @MockBean
-    private CardRepository cardRepository;
-
-    @MockBean
-    private ClientLoanRepository clientLoanRepository;
-
-    @Autowired
-    private WebApplicationContext context;
-
-
-    @Test
-    public void getCardsForClient_ReturnsOk() throws Exception {
+//    @Test
+//    public void getCardsForClient_ReturnsOk() throws Exception {
 //        // Simular la respuesta del servicio de tarjetas para el cliente Melba
 //        Client melbaClient = new Client();
 //        Set<Card> emptyCardSet = new HashSet<>();
@@ -82,5 +82,5 @@ public class CardControllerTest {
 //        // Verificar que la solicitud fue exitosa (código de estado 200)
 //        resultActions.andExpect(status().isOk());
 //    }
-    }
+//    }
 }
