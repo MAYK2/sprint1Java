@@ -25,125 +25,125 @@ public class HomebankingApplication {
                                       TransactionsRepository transactionRepository, LoanRepository loanRepository,
                                       ClientLoanRepository clientLoanRepository, CardRepository cardRepository, PasswordEncoder passwordEncoder) {  // Inyección del PasswordEncoder
         return args -> {
-//            Client client = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("123"));  // Usar el PasswordEncoder
-//            Client client2 = new Client("Erick", "Guevara", "guevara@guevara.com", passwordEncoder.encode("456"));  // Usar el PasswordEncoder
-//            Client admin = new Client("Mayco", "Dominguez", "mayco@admin.com", passwordEncoder.encode("contraseña"));
-//            LocalDate today = LocalDate.now();
-//            LocalDate tomorrow = today.plusDays(1);
-//            LocalDateTime dateTime = LocalDateTime.of(2024, 5, 6, 15, 30, 0);
-//            LocalDate fiveYears = LocalDate.now().plusYears(5);
+            Client client = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("123"));  // Usar el PasswordEncoder
+            Client client2 = new Client("Erick", "Guevara", "guevara@guevara.com", passwordEncoder.encode("456"));  // Usar el PasswordEncoder
+            Client admin = new Client("Mayco", "Dominguez", "mayco@admin.com", passwordEncoder.encode("contraseña"));
+            LocalDate today = LocalDate.now();
+            LocalDate tomorrow = today.plusDays(1);
+            LocalDateTime dateTime = LocalDateTime.of(2024, 5, 6, 15, 30, 0);
+            LocalDate fiveYears = LocalDate.now().plusYears(5);
+
+            // Crear las cuentas
+            Account account1 = new Account("VIN001", today, 5000.0);
+            Account account2 = new Account("VIN002", tomorrow, 7500.0);
+            Account account3 = new Account("VIN003", tomorrow, 4500.0);
+            Account account4 = new Account("VIN004", today, 4500.0);
+
+            // Crear las transacciones
+            Transaction transaction1 = new Transaction(-5000.0, "Supermercado", dateTime, TypeTransaction.DEBIT);
+            Transaction transaction2 = new Transaction(-2500.0, "Kiosco", dateTime, TypeTransaction.DEBIT);
+            Transaction transaction3 = new Transaction(-1000.0, "Alimento", dateTime, TypeTransaction.DEBIT);
+            Transaction transaction4 = new Transaction(10000.0, "Steam", dateTime, TypeTransaction.CREDIT);
+            Transaction transaction5 = new Transaction(25000.0, "Compra de zapatillas", dateTime, TypeTransaction.CREDIT);
+            Transaction transaction7 = new Transaction(-15000.0, "Cuota de gimnasio", dateTime, TypeTransaction.DEBIT);
+//            Transaction transaction9 = new Transaction(-15000.0, "MercadoPago", dateTime, TypeTransaction.DEBIT);
+//            Transaction transaction10 = new Transaction(15000.0, "MercadoLibre", dateTime, TypeTransaction.CREDIT);
+//            Transaction transaction11 = new Transaction(15000.0, "Neumaticos", dateTime, TypeTransaction.CREDIT);
+//            Transaction transaction12 = new Transaction(-15000.0, "Café", dateTime, TypeTransaction.DEBIT);
+
+            Loan hipotecario = new Loan("Hipotecario", 500000, List.of(12, 24, 36, 48, 60));
+            Loan personal = new Loan("Personal", 100000, List.of(6, 12, 24));
+            Loan automotor = new Loan("Automotor", 200000, List.of(6, 12, 24, 36));
+
+            // Crear los ClientLoans
+            ClientLoan melbaClientLoan = new ClientLoan(400000, 60);
+            ClientLoan melbaClientLoan2 = new ClientLoan(50000, 12);
+
+            ClientLoan erickClientLoan = new ClientLoan(100000, 24);
+            ClientLoan erickClientLoan2 = new ClientLoan(200000, 36);
+
+            // Crear las tarjetas
+            Card cardMelbaDebit = new Card("4498-9824-1662-0586", 333, today, fiveYears, CardType.DEBIT, ColorCard.GOLD, "Melba Morel");
+            Card cardMelbaCredit = new Card("4498-9423-1152-5083", 550, today, fiveYears, CardType.CREDIT, ColorCard.TITANIUM, "Melba Morel");
+            Card cardErickDebit = new Card("4498-3770-3454-1222", 248, today, fiveYears, CardType.DEBIT, ColorCard.SILVER, "Erick Guevara");
+
+            // Guardar los clientes en el repositorio primero
+            clientRepository.save(client);
+            clientRepository.save(client2);
+
+            // Guardar las cuentas en el repositorio
+            accountRepository.save(account1);
+            accountRepository.save(account2);
+            accountRepository.save(account3);
+            accountRepository.save(account4);
+
+            // Asociar las cuentas con los clientes
+            client.addAccount(account1);
+            client.addAccount(account2);
+            client2.addAccount(account3);
+            client2.addAccount(account4);
+
+            // Guardar las transacciones en el repositorio
+            transactionRepository.save(transaction1);
+            transactionRepository.save(transaction2);
+            transactionRepository.save(transaction3);
+            transactionRepository.save(transaction4);
+            transactionRepository.save(transaction5);
+            transactionRepository.save(transaction7);
+//            transactionRepository.save(transaction9);
+//            transactionRepository.save(transaction10);
+//            transactionRepository.save(transaction11);
+//            transactionRepository.save(transaction12);
 //
-//            // Crear las cuentas
-//            Account account1 = new Account("VIN001", today, 5000.0);
-//            Account account2 = new Account("VIN002", tomorrow, 7500.0);
-//            Account account3 = new Account("VIN003", tomorrow, 4500.0);
-//            Account account4 = new Account("VIN004", today, 4500.0);
-//
-//            // Crear las transacciones
-//            Transaction transaction1 = new Transaction(-5000.0, "Supermercado", dateTime, TypeTransaction.DEBIT);
-//            Transaction transaction2 = new Transaction(-2500.0, "Kiosco", dateTime, TypeTransaction.DEBIT);
-//            Transaction transaction3 = new Transaction(-1000.0, "Alimento", dateTime, TypeTransaction.DEBIT);
-//            Transaction transaction4 = new Transaction(10000.0, "Steam", dateTime, TypeTransaction.CREDIT);
-//            Transaction transaction5 = new Transaction(25000.0, "Compra de zapatillas", dateTime, TypeTransaction.CREDIT);
-//            Transaction transaction7 = new Transaction(-15000.0, "Cuota de gimnasio", dateTime, TypeTransaction.DEBIT);
-////            Transaction transaction9 = new Transaction(-15000.0, "MercadoPago", dateTime, TypeTransaction.DEBIT);
-////            Transaction transaction10 = new Transaction(15000.0, "MercadoLibre", dateTime, TypeTransaction.CREDIT);
-////            Transaction transaction11 = new Transaction(15000.0, "Neumaticos", dateTime, TypeTransaction.CREDIT);
-////            Transaction transaction12 = new Transaction(-15000.0, "Café", dateTime, TypeTransaction.DEBIT);
-//
-//            Loan hipotecario = new Loan("Hipotecario", 500000, List.of(12, 24, 36, 48, 60));
-//            Loan personal = new Loan("Personal", 100000, List.of(6, 12, 24));
-//            Loan automotor = new Loan("Automotor", 200000, List.of(6, 12, 24, 36));
-//
-//            // Crear los ClientLoans
-//            ClientLoan melbaClientLoan = new ClientLoan(400000, 60);
-//            ClientLoan melbaClientLoan2 = new ClientLoan(50000, 12);
-//
-//            ClientLoan erickClientLoan = new ClientLoan(100000, 24);
-//            ClientLoan erickClientLoan2 = new ClientLoan(200000, 36);
-//
-//            // Crear las tarjetas
-//            Card cardMelbaDebit = new Card("4498-9824-1662-0586", 333, today, fiveYears, CardType.DEBIT, ColorCard.GOLD, "Melba Morel");
-//            Card cardMelbaCredit = new Card("4498-9423-1152-5083", 550, today, fiveYears, CardType.CREDIT, ColorCard.TITANIUM, "Melba Morel");
-//            Card cardErickDebit = new Card("4498-3770-3454-1222", 248, today, fiveYears, CardType.DEBIT, ColorCard.SILVER, "Erick Guevara");
-//
-//            // Guardar los clientes en el repositorio primero
-//            clientRepository.save(client);
-//            clientRepository.save(client2);
-//
-//            // Guardar las cuentas en el repositorio
-//            accountRepository.save(account1);
-//            accountRepository.save(account2);
-//            accountRepository.save(account3);
-//            accountRepository.save(account4);
-//
-//            // Asociar las cuentas con los clientes
-//            client.addAccount(account1);
-//            client.addAccount(account2);
-//            client2.addAccount(account3);
-//            client2.addAccount(account4);
-//
-//            // Guardar las transacciones en el repositorio
-//            transactionRepository.save(transaction1);
-//            transactionRepository.save(transaction2);
-//            transactionRepository.save(transaction3);
-//            transactionRepository.save(transaction4);
-//            transactionRepository.save(transaction5);
-//            transactionRepository.save(transaction7);
-////            transactionRepository.save(transaction9);
-////            transactionRepository.save(transaction10);
-////            transactionRepository.save(transaction11);
-////            transactionRepository.save(transaction12);
-////
-//            account1.addTransaction(transaction1);
-//            account1.addTransaction(transaction2);
-//            account1.addTransaction(transaction3);
-//            account2.addTransaction(transaction4);
-//            account2.addTransaction(transaction5);
-//            account3.addTransaction(transaction7);
-////            account3.agregarTransaccion(transaction9);
-////            account4.agregarTransaccion(transaction10);
-////            account4.agregarTransaccion(transaction11);
-////            account4.agregarTransaccion(transaction12);
-//
-//            // Guardar los clientes actualizados en el repositorio
-//            clientRepository.save(client);
-//            clientRepository.save(client2);
-//
-//            // Guardar los préstamos en el repositorio
-//            loanRepository.save(hipotecario);
-//            loanRepository.save(personal);
-//            loanRepository.save(automotor);
-//
-//            client.addClientLoan(melbaClientLoan2);
-//            client.addClientLoan(melbaClientLoan);
-//            client2.addClientLoan(erickClientLoan2);
-//            client2.addClientLoan(erickClientLoan);
-//            personal.addClientLoan(melbaClientLoan2);
-//            hipotecario.addClientLoan(melbaClientLoan);
-//            automotor.addClientLoan(erickClientLoan2);
-//            personal.addClientLoan(erickClientLoan);
-//
-//            // Guardar ClientLoans en el repositorio
-//            clientLoanRepository.save(melbaClientLoan);
-//            clientLoanRepository.save(melbaClientLoan2);
-//            clientLoanRepository.save(erickClientLoan);
-//            clientLoanRepository.save(erickClientLoan2);
-//
-//            // Asociar los clientes con sus tarjetas
-//            client.addCard(cardMelbaDebit);
-//            client.addCard(cardMelbaCredit);
-//            client2.addCard(cardErickDebit);
-//
-//            // Guardar las tarjetas en el repositorio
-//            cardRepository.save(cardMelbaDebit);
-//            cardRepository.save(cardMelbaCredit);
-//            cardRepository.save(cardErickDebit);
-//
-//            // Guardar los clientes actualizados en el repositorio
-//            clientRepository.save(client);
-//            clientRepository.save(client2);
-//            clientRepository.save(admin);
+            account1.addTransaction(transaction1);
+            account1.addTransaction(transaction2);
+            account1.addTransaction(transaction3);
+            account2.addTransaction(transaction4);
+            account2.addTransaction(transaction5);
+            account3.addTransaction(transaction7);
+//            account3.agregarTransaccion(transaction9);
+//            account4.agregarTransaccion(transaction10);
+//            account4.agregarTransaccion(transaction11);
+//            account4.agregarTransaccion(transaction12);
+
+            // Guardar los clientes actualizados en el repositorio
+            clientRepository.save(client);
+            clientRepository.save(client2);
+
+            // Guardar los préstamos en el repositorio
+            loanRepository.save(hipotecario);
+            loanRepository.save(personal);
+            loanRepository.save(automotor);
+
+            client.addClientLoan(melbaClientLoan2);
+            client.addClientLoan(melbaClientLoan);
+            client2.addClientLoan(erickClientLoan2);
+            client2.addClientLoan(erickClientLoan);
+            personal.addClientLoan(melbaClientLoan2);
+            hipotecario.addClientLoan(melbaClientLoan);
+            automotor.addClientLoan(erickClientLoan2);
+            personal.addClientLoan(erickClientLoan);
+
+            // Guardar ClientLoans en el repositorio
+            clientLoanRepository.save(melbaClientLoan);
+            clientLoanRepository.save(melbaClientLoan2);
+            clientLoanRepository.save(erickClientLoan);
+            clientLoanRepository.save(erickClientLoan2);
+
+            // Asociar los clientes con sus tarjetas
+            client.addCard(cardMelbaDebit);
+            client.addCard(cardMelbaCredit);
+            client2.addCard(cardErickDebit);
+
+            // Guardar las tarjetas en el repositorio
+            cardRepository.save(cardMelbaDebit);
+            cardRepository.save(cardMelbaCredit);
+            cardRepository.save(cardErickDebit);
+
+            // Guardar los clientes actualizados en el repositorio
+            clientRepository.save(client);
+            clientRepository.save(client2);
+            clientRepository.save(admin);
         };
     }
 }
