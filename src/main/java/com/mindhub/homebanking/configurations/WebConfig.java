@@ -40,7 +40,7 @@ public class WebConfig {
 //                        .requestMatchers("/api/clients").hasRole("ADMIN")
 //                        .requestMatchers("/api/clients/**").hasRole("ADMIN")
 //                        .requestMatchers("/api/accounts").hasRole("ADMIN")
-//                        .requestMatchers("/api/accounts/**").hasRole("ADMIN")
+//                        .requestMatchers("/api/accounts/**").hasRole("CLIENT")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

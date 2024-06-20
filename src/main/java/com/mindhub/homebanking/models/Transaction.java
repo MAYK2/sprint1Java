@@ -59,8 +59,8 @@ public class Transaction {
         return date;
     }
 
-    public void setDate(LocalDateTime fecha) {
-        this.date = fecha;
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     public TypeTransaction getType() {

@@ -34,10 +34,10 @@ public class HomebankingApplication {
             LocalDate fiveYears = LocalDate.now().plusYears(5);
 
             // Crear las cuentas
-            Account account1 = new Account("VIN001", today, 5000.0);
-            Account account2 = new Account("VIN002", tomorrow, 7500.0);
-            Account account3 = new Account("VIN003", tomorrow, 4500.0);
-            Account account4 = new Account("VIN004", today, 4500.0);
+            Account account1 = new Account("VIN-00000001", today, 5000.0);
+            Account account2 = new Account("VIN-00000002", tomorrow, 7500.0);
+            Account account3 = new Account("VIN-00000003", tomorrow, 4500.0);
+            Account account4 = new Account("VIN-00000004", today, 4500.0);
 
             // Crear las transacciones
             Transaction transaction1 = new Transaction(-5000.0, "Supermercado", dateTime, TypeTransaction.DEBIT);
@@ -46,10 +46,8 @@ public class HomebankingApplication {
             Transaction transaction4 = new Transaction(10000.0, "Steam", dateTime, TypeTransaction.CREDIT);
             Transaction transaction5 = new Transaction(25000.0, "Compra de zapatillas", dateTime, TypeTransaction.CREDIT);
             Transaction transaction7 = new Transaction(-15000.0, "Cuota de gimnasio", dateTime, TypeTransaction.DEBIT);
-//            Transaction transaction9 = new Transaction(-15000.0, "MercadoPago", dateTime, TypeTransaction.DEBIT);
-//            Transaction transaction10 = new Transaction(15000.0, "MercadoLibre", dateTime, TypeTransaction.CREDIT);
-//            Transaction transaction11 = new Transaction(15000.0, "Neumaticos", dateTime, TypeTransaction.CREDIT);
-//            Transaction transaction12 = new Transaction(-15000.0, "Café", dateTime, TypeTransaction.DEBIT);
+            Transaction transaction9 = new Transaction(-15000.0, "MercadoPago", dateTime, TypeTransaction.DEBIT);
+
 
             Loan hipotecario = new Loan("Hipotecario", 500000, List.of(12, 24, 36, 48, 60));
             Loan personal = new Loan("Personal", 100000, List.of(6, 12, 24));
@@ -90,21 +88,17 @@ public class HomebankingApplication {
             transactionRepository.save(transaction4);
             transactionRepository.save(transaction5);
             transactionRepository.save(transaction7);
-//            transactionRepository.save(transaction9);
-//            transactionRepository.save(transaction10);
-//            transactionRepository.save(transaction11);
-//            transactionRepository.save(transaction12);
-//
+            transactionRepository.save(transaction9);
+
+
             account1.addTransaction(transaction1);
             account1.addTransaction(transaction2);
             account1.addTransaction(transaction3);
             account2.addTransaction(transaction4);
             account2.addTransaction(transaction5);
             account3.addTransaction(transaction7);
-//            account3.agregarTransaccion(transaction9);
-//            account4.agregarTransaccion(transaction10);
-//            account4.agregarTransaccion(transaction11);
-//            account4.agregarTransaccion(transaction12);
+            account3.addTransaction(transaction9);
+
 
             // Guardar los clientes actualizados en el repositorio
             clientRepository.save(client);
